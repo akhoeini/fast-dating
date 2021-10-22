@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="stylesheet" href="/style.css"/>
+        <title>{% block title %}{% endblock %} - My Webpage</title>
+        {% block addHead %}
+        {% endblock %}
+    </head>
+    <body>
+        <div id="centeredContent">{% block content %}{% endblock %}
+            <div id="footer">
+                {% block footer %}
+                    &copy; Copyright 2011 by <a href="http://day06slimfirst/">you</a>.
+                {% endblock %}
+                <p>Client IP address: {{ clientIP }}</p>
+            </div>
+        </div>
+    </body>
+</html>

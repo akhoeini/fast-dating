@@ -1,2 +1,4 @@
 vendor
 tmplcache
+logs
+.DS_Store
