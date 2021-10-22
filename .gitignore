@@ -3,3 +3,4 @@ tmplcache
 logs
 .DS_Store
 tmplcache
+composer.lock
