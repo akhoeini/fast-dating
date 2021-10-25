@@ -18,12 +18,18 @@ $log->pushProcessor(function ($record) {
     $record['extra']['ip'] = $_SERVER['REMOTE_ADDR'];
     return $record;
 });
+if (strpos($_SERVER['HTTP_HOST'], "fds01.ca") !== false) {
+    DB::$dbName = 'cp5016_dating';
+    DB::$user = 'cp5016_dating';
+    DB::$password = 'TTJYrGR.g#.X';
+}else{
+    DB::$dbName = 'day06slimauctions';
+    DB::$user = 'day06slimauctions';
+    DB::$password = '.(S.Mo8p6cYuty5F';
+    DB::$host = 'localhost';
+    DB::$port = 3333;
+}
 
-DB::$dbName = 'day06slimauctions';
-DB::$user = 'day06slimauctions';
-DB::$password = '.(S.Mo8p6cYuty5F';
-DB::$host = 'localhost';
-DB::$port = 3333;
 // Name:cp5016_dating
 // UserName:cp5016_dating
 // Password:"TTJYrGR.g#.X"
