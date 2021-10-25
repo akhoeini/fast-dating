@@ -1,6 +1,5 @@
 {
     "name": "teacher/app",
-    "config": { "platform-check": false },
     "require": {
         "slim/slim": "^3.12",
         "twig/twig": "v2.14.7",
