@@ -6,6 +6,7 @@ require_once 'vendor/autoload.php';
 
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
+use Twig\Node\Expression\NameExpression;
 
 // create a log channel
 $log = new Logger('main');
@@ -23,6 +24,9 @@ DB::$user = 'day06slimauctions';
 DB::$password = '.(S.Mo8p6cYuty5F';
 DB::$host = 'localhost';
 DB::$port = 3333;
+// Name:cp5016_dating
+// UserName:cp5016_dating
+// Password:"TTJYrGR.g#.X"
 
 DB::$error_handler = 'db_error_handler'; // runs on mysql query errors
 DB::$nonsql_error_handler = 'db_error_handler'; // runs on library errors (bad syntax, etc)
