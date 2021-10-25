@@ -1,0 +1,16 @@
+##==>>1: What you did yesterday?
+
+##==>>2: What you are planning today?
+
+##==>>3: Any challenges?
+
+Day 1 :
+ Amin:
+    1: I create the project structure with teacher.(git trello files).
+    
+    2: I'm going to implements UI(Just HTML and CSS) of login page.
+
+    3: So far so good!
+
+
+    
