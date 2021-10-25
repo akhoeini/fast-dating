@@ -18,7 +18,7 @@ $log->pushProcessor(function ($record) {
     $record['extra']['ip'] = $_SERVER['REMOTE_ADDR'];
     return $record;
 });
-if (strpos($_SERVER['HTTP_HOST'], "fds01.ca") !== false) {
+if (strpos($_SERVER['HTTP_HOST'], "fsd01.ca") !== false) {
     DB::$dbName = 'cp5016_dating';
     DB::$user = 'cp5016_dating';
     DB::$password = 'TTJYrGR.g#.X';
