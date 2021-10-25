@@ -4,7 +4,7 @@
 
 ##==>>3: Any challenges?
 
-Day 1 :
+Day 1 (10/25/2021):
  Amin:
     1: I create the project structure with teacher.(git trello files).
     
@@ -17,8 +17,7 @@ Shengguang:
        fixed some problems of project
        added cards in trello backlog
     2: working on chat feature
-    3: no
-       
+    3: no       
 
 
  Kevin:
