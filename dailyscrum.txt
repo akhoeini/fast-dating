@@ -21,5 +21,10 @@ Shengguang:
        
 
 
+ Kevin:
+    1: Set up repository access via VS Code. Researched similar websites.
 
-    
+    2. Continue research. Create master html.twig file.
+
+    3. So far so good.
+
