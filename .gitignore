@@ -4,3 +4,5 @@ logs
 .DS_Store
 tmplcache
 composer.lock
+.vscode
+sftp.json
