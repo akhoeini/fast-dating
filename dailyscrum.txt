@@ -7,9 +7,7 @@
 Day 1 (10/25/2021):
  Amin:
     1: I create the project structure with teacher.(git trello files).
-    
     2: I'm going to implements UI(Just HTML and CSS) of login page.
-
     3: So far so good!
 
 Shengguang:
@@ -22,9 +20,7 @@ Shengguang:
 
  Kevin:
     1: Set up repository access via VS Code. Researched similar websites.
-
     2. Continue research. Create master html.twig file.
-
     3. So far so good.
 
 Day 2 (10/26/2021):
@@ -35,3 +31,8 @@ Shengguang:
        install nodejs 
        desgin, front-end html      
     3: no       
+
+Kevin:
+   1: Continued similar website research.
+   2: Begin profile creator PHP/Slim implementation
+   3: no
