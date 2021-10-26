@@ -27,3 +27,12 @@ Shengguang:
 
     3. So far so good.
 
+Day 2 (10/26/2021):
+ Amin:
+    1: I create the project structure with teacher.(git trello files).
+    
+    2: I'm going to implements UI(Just HTML and CSS) of login page.
+
+    3: So far so good!
+
+
