@@ -1,0 +1,17 @@
+{% extends "master.html.twig" %}
+
+{% block content %}
+
+<table>
+
+</table>
+
+{% if ownProfile %}
+<div class="edit_profile_btn">
+<form action="/edit_profile/{{ uId }}">
+    <input type="submit" value="Edit Your Profile" />
+</form>
+</div>
+{% endif %}
+
+{% endblock content %}
