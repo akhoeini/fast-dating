@@ -27,3 +27,11 @@ Shengguang:
 
     3. So far so good.
 
+Day 2 (10/26/2021):
+Shengguang:
+    1: fsd01.ca domain environment setup
+       chat design
+    2: working on chat features:
+       install nodejs 
+       desgin, front-end html      
+    3: no       
