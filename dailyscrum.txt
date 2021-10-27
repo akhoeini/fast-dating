@@ -53,7 +53,7 @@ Amin:
 
 Shengguang:
    1: installed nodejs
-      researched socket.io and other librarys
+      researched socket.io and other libraries
    2: Continue working on chat
       desgin main page layout
    3: no
