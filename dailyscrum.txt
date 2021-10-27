@@ -41,4 +41,12 @@ Amin:
    1: fsd01.ca domain environment setup
       Continued similar website research.
    2: Begin workingon login/register
-   3:no   
+   3:no
+
+Day 2 (10/26/2021):
+Amin:
+   1: fixing database tables and keys and indexes
+      searching about jwt token to implement in register
+      searching about google, facebook apies for user registeration. 
+   2: finish register
+   3:no
