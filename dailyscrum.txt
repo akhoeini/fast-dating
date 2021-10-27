@@ -41,7 +41,7 @@ Amin:
    1: fsd01.ca domain environment setup
       Continued similar website research.
    2: Begin workingon login/register
-   3:no
+   3: no
 
 Day 3 (10/27/2021):
 Amin:
@@ -49,11 +49,16 @@ Amin:
       searching about jwt token to implement in register
       searching about google, facebook apies for user registeration. 
    2: finish register
-   3:no
+   3: no
 
 Shengguang:
    1: installed nodejs
       researched socket.io and other libraries
    2: Continue working on chat
       desgin main page layout
+   3: no
+
+   Kevin:
+   1: Created skeleton for PHP/Slim profile implementation
+   2: Continue profile URL handling
    3: no
