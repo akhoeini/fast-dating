@@ -43,10 +43,17 @@ Amin:
    2: Begin workingon login/register
    3:no
 
-Day 2 (10/26/2021):
+Day 3 (10/27/2021):
 Amin:
    1: fixing database tables and keys and indexes
       searching about jwt token to implement in register
       searching about google, facebook apies for user registeration. 
    2: finish register
    3:no
+
+Shengguang:
+   1: installed nodejs
+      researchd socket.io
+   2: Continue working on chat
+      desgin main page layout
+   3: no
