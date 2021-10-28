@@ -55,10 +55,18 @@ Shengguang:
    1: installed nodejs
       researched socket.io and other libraries
    2: Continue working on chat
-      desgin main page layout
+      desgin chat page layout
    3: no
 
    Kevin:
    1: Created skeleton for PHP/Slim profile implementation
    2: Continue profile URL handling
+   3: no
+
+Day 4 (10/28/2021):
+Shengguang:
+   1: nodejs express setup
+      test socket.io and other libraries
+   2: Continue working on chat
+      front-end UI and back-end logic
    3: no
