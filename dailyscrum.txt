@@ -70,3 +70,15 @@ Shengguang:
    2: Continue working on chat
       front-end UI and back-end logic
    3: no
+
+Kevin:
+   1: no substantial progress.
+   2: Continue profile handling.
+   3: no.
+
+
+Day 5 (10/29/2021):
+Kevin:
+   1: Reviewed Slim documentation.
+   2: Continue profile handling.
+   3: no.
