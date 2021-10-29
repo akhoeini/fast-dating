@@ -82,3 +82,10 @@ Kevin:
    1: Reviewed Slim documentation.
    2: Continue profile handling.
    3: no.
+
+Shengguang:
+   1: test nodejs express framework and socket.io
+      desgin main page layout
+      research mock user data       
+   2: Continue working on chat
+   3: no
