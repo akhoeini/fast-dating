@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Fast-Dating MyTinder</title>
+<meta charset="utf-8">
+<script type="text/javascript" src="./js/jquery.min.js"></script>
+<script type="text/javascript" src="./js/jquery.transform2d.js"></script>
+<script type="text/javascript" src="./js/jquery.jTinder.js"></script>    
+<link rel="stylesheet" type="text/css" href="./css/jTinder.css">
+<style>
+body {
+    font-family:Verdana, Arial, sans-serif;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;     
+    margin: auto;
+}
+
+header {
+    background-color: #869dc7;
+    color: #b1b1d3; 
+    font-size: 150%; 
+    padding: 10px 10px 10px 10px;
+    background-repeat: no-repeat;
+    background-color: rgb(190, 13, 119);
+    height: 80px;
+
+    display: flex;
+    flex-direction: row;
+    z-index: 1;
+}
+
+.main {
+    width:100%;
+    display: flex;
+}
+
+.sidebar { 
+       float: left;
+	   width: 220px;
+       height: 78vh;
+	   letter-spacing:0.1em;
+	   font-weight: bold;
+       background-color: rgb(236,236,255);
+       z-index: 1;
+} 
+
+.sidebar ul { 
+        list-style-type: none; 
+        margin: 0;
+        padding: 5px;
+}
+
+.sidebar a { 
+text-decoration: none; 
+        display: block;
+	    padding: 20px;    
+        background-color: #b3c7e6;     
+	    border-bottom: 1px solid #ffffff; 
+        border-radius: 3px;
+}
+.sidebar a:link { 
+    color: #ffffff; 
+}
+.sidebar a:visited { 
+    color: #eaeaea; 
+}
+.sidebar a:hover { 
+    background-color: #eaeaea;
+    color: #869dc7;
+    cursor: pointer;
+}
+
+#content { 
+    background-color: #ffffff;
+    color: #000000;
+    padding: 10px 10px;
+    margin: auto;
+    z-index: 0;
+} 
+
+footer {
+    position: fixed;
+
+    font-size:70%;
+    text-align: center;
+    padding-top: 20px;
+    
+    width: 100%;
+    height: 5vh;
+    margin: auto;
+    padding: auto;
+
+    left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: rgba(134, 157, 199, 0.5);
+  color: white;
+  text-align: center;    
+}
+
+.main-nav {
+    position: relative;
+    width: auto;
+    right: -1200px;
+    --color-1: rgba(196, 206, 214, 0.8);
+    --color-2: rgba(75, 96, 114, 0.8);      
+}
+
+.main-nav ul li {
+  display: inline;
+  padding: 1em;
+  list-style-type: none;  
+}
+.main-nav ul li:last-child {
+  border-bottom: none;
+}
+.main-nav ul li a {
+  color: var(--color-1);
+  text-decoration: none;
+}
+.main-nav ul li a:hover {
+  color: var(--color-2);
+}
+</style>
+</head>
+<body>
+    <header>
+        <h1>Fast-Dating</h1>          
+    </header> 
+    <div class="main">
+        <div class="sidebar">
+            <ul>
+            <li><a onclick="showRecommendation()">Recommendation</a></li>
+            <li><a onclick="showMatches()">Matches</a></li>
+            <li><a onclick="showLikes()">Likes</a></li>
+            <li><a onclick="showProfile()">Profile</a></li>
+            <li><a onclick="showPhoto()">Pohto</a></li>
+            <li><a onclick="showMessage()">Message</a></li>
+            </ul> 
+        </div> 
+        <div id="content"> 
+        </div> 
+    </div> 
+    <footer>Copyright &copy; 2021
+    </footer>
+
+    <script>
+
+        $(document).ready(function() {
+            showRecommendation();
+        });        
+
+        function showRecommendation() {            
+            $("#content").load("./templates/tinder.html.twig");
+            
+            // $.ajax({     
+            //     async: true,                                 
+            //     url: './templates/index.html',              
+            //     type: "get",          
+            //     dataType: 'html',                
+            //     success: function(data){
+            //         console.log(data);
+            //         $("#content").html(data);
+            //     } 
+            // });            
+        }
+
+        function showMatches() {
+            //for test
+             $("#content").html("Matches");
+        }
+
+        function showLikes() {
+            //for test
+             $("#content").html("Likes");
+        }
+
+        function showProfile() {
+            //for test
+             $("#content").html("Profile");
+        }        
+
+        function showPhoto() {
+            //for test
+             $("#content").html("Photo");
+        } 
+        
+        function showMessage() {
+            //for test
+             $("#content").html("Message");
+        }         
+    </script>
+</body>
+</html>
+
+

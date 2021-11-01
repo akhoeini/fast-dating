@@ -19,6 +19,4 @@ $app->get('/profile/{uId:[0-9]+}', function($request, $response, $args) {
         return $this->view->render($response, 'profile.html.twig', ['ownProfile' => true, 'uId' => $userId]);
     }
 
-    
-};
-
+});
