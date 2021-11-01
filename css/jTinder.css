@@ -35,7 +35,6 @@ body {
     overflow: hidden;
     position: absolute;
     top: 0;
-    z-index: 2;
     left: 0;
     box-shadow: 0 0 20px rgba(0, 0, 0, .2);
     overflow: hidden;
@@ -49,6 +48,7 @@ body {
     border: 1px solid rgba(96, 96, 96, 0.2);
     transform: translate3d(0%,0,0) scale3d(1,1,1);
     backface-visibility: hidden;
+    z-index: 2;
 }
 
 /* Image text */
@@ -97,7 +97,9 @@ body {
 #tinderslide .img {
     height: 90%;
     width: 300px;
+    margin-left: 10px;
     margin-bottom: 10px;
+    margin-top: 10px;    
     position: relative;
     transform: translate3d(0%,0,0) scale3d(1,1,1);
     overflow: hidden;
