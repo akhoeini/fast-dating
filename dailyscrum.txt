@@ -89,3 +89,9 @@ Shengguang:
       research mock user data       
    2: Continue working on chat
    3: no
+
+Day 6 (11/1/2021):
+Shengguang:
+   1: main page layout & tinder feature
+   2: mock user data
+   3: no
