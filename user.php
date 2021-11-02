@@ -15,6 +15,10 @@ $app->get('/login', function ($request, $response, $args) {
     return $this->view->render($response, 'login.html.twig');
  });
 
+ $app->get('/profile', function ($request, $response, $args) {
+    return $this->view->render($response, 'editprofile.html.twig');
+ });
+
 $app->get('/profile/{uId:[0-9]+}', function($request, $response, $args) {
 
     $userInfo = DB::queryFirstRow("SELECT * FROM users WHERE id=%i", $args['uId']);
