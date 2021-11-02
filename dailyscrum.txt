@@ -96,3 +96,11 @@ Shengguang:
    2: mock user data
       main page layout
    3: no
+
+
+Day 7 (11/2/2021):
+Shengguang:
+   1: mock user data 
+   2: improve tinder swipe feature
+      pass/like feature
+   3: no   
