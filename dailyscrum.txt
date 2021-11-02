@@ -97,10 +97,20 @@ Shengguang:
       main page layout
    3: no
 
+Kevin:
+   1: Discussed profile handling strategy with Amin
+   2: Focus on web services today - return to project tomorrow
+   3: no
+
 
 Day 7 (11/2/2021):
 Shengguang:
    1: mock user data 
    2: improve tinder swipe feature
       pass/like feature
-   3: no   
+   3: no
+
+Kevin:
+   1: Focused on web services. No work planned.
+   2: Advance on profile handling (edit for own profile) including validation
+   3: Time management + divided attention
