@@ -2,16 +2,20 @@
 
 {% block content %}
 
-<table>
+	<h4 class="pb-4 border-bottom">{{ a.userName }}</h4>
+	<div class="d-flex align-items-start py-3 border-bottom">
+		<img src="https://images.pexels.com/photos/1037995/pexels-photo-1037995.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" class="img" alt="">
+	</div>
+    <div class="py-2">
+    <p>{{ a.birthDate | age }}</p>
+    </div>
 
-</table>
-
-{% if ownProfile %}
-<div class="edit_profile_btn">
-<form action="/edit_profile/{{ uId }}">
-    <input type="submit" value="Edit Your Profile" />
-</form>
-</div>
-{% endif %}
+	{% if ownProfile %}
+		<div class="edit_profile_btn">
+			<form action="/edit_profile/{{ uId }}">
+				<input type="submit" value="Edit Your Profile"/>
+			</form>
+		</div>
+	{% endif %}
 
 {% endblock content %}
