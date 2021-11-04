@@ -29,5 +29,25 @@ $app->get('/profile/{uId:[0-9]+}', function($request, $response, $args) {
         $isOwnProfile = ($args['uId'] == $_SESSION['userId']);
         return $this->view->render($response, 'profile.html.twig', ['u' => $userInfo, 'ownProfile' => $isOwnProfile] );
     }
-
 });
+
+class MatchUser
+{
+    public $id;    
+    public $photo;
+    public $userName;
+    public $location;
+}
+
+$app->get('/matches', function ($request, $response, $args) {
+    $myCar = new MatchUser();
+    $myCar->id = 'red';
+    $myCar->photo = 'red';
+    $myCar->userName = 'sedan';
+    $myCar->location = 'sedan';
+    
+    $cars["categories"] = array($myCar, $myCar, $myCar, $myCar);    
+
+    return $this->view->render($response, 'matches.html.twig', $cars);
+ });
+

@@ -194,7 +194,17 @@ footer {
 
         function showMatches() {
             //for test
-             $("#content").html("Matches");
+             //$("#content").load("./templates/matches.html.twig");
+            $.ajax({     
+                async: true,                                 
+                url: './matches',              
+                type: "get",          
+                dataType: 'html',                
+                success: function(data){
+                    console.log(data);
+                    $("#content").html(data);
+                } 
+            });                 
         }
 
         function showLikes() {
