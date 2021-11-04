@@ -42,18 +42,18 @@ class MatchUser
 }
 
 $app->get('/matches', function ($request, $response, $args) {
-    $cars["items"] = array();    
+    $data["items"] = array();    
     for($i = 0; $i < 4; $i++)
     {
         $id = rand(1, 1000);
         $userItem = new MatchUser();
         $userItem->id = $id;
-        $userItem->photo = 'red';
+        $userItem->photo = $id;
         $userItem->userName = 'sedan' . $id;
         $userItem->location = 'Montreal';        
-        $cars["items"] []= $userItem;        
+        $data["items"] []= $userItem;        
     }
 
-    return $this->view->render($response, 'matches.html.twig', $cars);
+    return $this->view->render($response, 'matches.html.twig', $data);
  });
 

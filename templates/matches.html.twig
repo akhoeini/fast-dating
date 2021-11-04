@@ -53,7 +53,7 @@
         {% if items is iterable %}
           {% for item in items %}
             <tr>
-              <td><img style="border-radius: 50%;" src="https://picsum.photos/50/50/?random"/></td>              
+              <td><img style="border-radius: 50%;" src="https://picsum.photos/id/{{item.photo}}/60/60/"/></td>              
               <td>{{ item.userName }}</td>
               <td>{{ item.location }}</td>
               <td><a style="cursor:pointer;color:white;" onclick="showUserProfile({{item.id}});" class="btn btn-danger">View</a></td>
