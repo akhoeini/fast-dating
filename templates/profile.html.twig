@@ -1,11 +1,15 @@
 {% extends "master.html.twig" %}
 
+{% block addHead %}
+<link rel="stylesheet" href="../styles/profile.css">
+{% endblock %}
+
 {% block content %}
 <div class="wrapper">
 	<h4 class="profile_username">{{ u.userName }}</h4>
 	<div class="profile_main_photo">
     {% for picture in pics %}
-		<img src="./{{ picture.url }}" class="img" alt="" width="{{ loop.first ? '350px' : '100px' }}">
+		<img src="../{{ picture.url }}" class="{{ loop.first ? 'profile-photo-main' : 'profile-photo-secondary' }} profile-photo" alt="" width="{{ loop.first ? '350px' : '100px' }}">
 	{% endfor %}
     </div>
     <div class="profile_age">
@@ -20,7 +24,6 @@
     <li>{{ i }}</li>
 	{% endfor %}
     </ul>
-    </div>
     </div>
 
 	{% if ownProfile %}
@@ -38,5 +41,7 @@
 			</form>
 		</div>
 	{% endif %}
+
+    </div>
 
 {% endblock content %}
