@@ -5,7 +5,7 @@
 	<h4 class="profile_username">{{ u.userName }}</h4>
 	<div class="profile_main_photo">
     {% for picture in pics %}
-		<img src="../{{ picture.url }}" class="img" alt="" width="350px">
+		<img src="../{{ picture.url }}" class="img" alt="" width="{{ loop.first ? '350px' : '100px' }}">
 	{% endfor %}
     </div>
     <div class="profile_age">
