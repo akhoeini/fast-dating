@@ -9,11 +9,7 @@
 	<h4 class="profile_username">{{ u.userName }}</h4>
 	<div class="profile_main_photo">
     {% for picture in pics %}
-<<<<<<< HEAD
 		<img src="../{{ picture.url }}" class="{{ loop.first ? 'profile-photo-main' : 'profile-photo-secondary' }} profile-photo" alt="" width="{{ loop.first ? '350px' : '100px' }}">
-=======
-		<img src="./{{ picture.url }}" class="img" alt="" width="{{ loop.first ? '350px' : '100px' }}">
->>>>>>> 96c50087c763dced318de69719a73524abbb041c
 	{% endfor %}
     </div>
     <div class="profile_age">
