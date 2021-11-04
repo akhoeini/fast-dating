@@ -1,13 +1,16 @@
 {% extends "master.html.twig" %}
 
 {% block content %}
-<div class="wrapper bg-white mt-sm-5">
-	<h4 class="pb-4 border-bottom">{{ a.userName }}</h4>
-	<div class="d-flex align-items-start py-3 border-bottom">
+<div class="wrapper">
+	<h4 class="profile_username">{{ u.userName }}</h4>
+	<div class="profile_main_photo">
 		<img src="https://images.pexels.com/photos/1037995/pexels-photo-1037995.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" class="img" alt="">
 	</div>
-    <div class="py-2">
-    <p>{{ a.birthDate | age }} years old</p>
+    <div class="profile_age">
+    <p>{{ u.birthDate }} years old</p>
+    </div>
+    <div class="profile_bio">
+    <p>{{ u.bio }}</p>
     </div>
     </div>
 
