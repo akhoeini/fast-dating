@@ -19,17 +19,19 @@
           <th style="width: 70px">Photo</th>
           <th>Name</th>
           <th>Location</th>
-          <th>Options</th>
+          <th style="width: 90px">Profile</th>
+          <th style="width: 90px">Chat</th>
         </tr>
         </thead>
         <tbody>
-        {% if categories is iterable %}
-          {% for category in categories %}
+        {% if items is iterable %}
+          {% for item in items %}
             <tr>
               <td><img style="border-radius: 50%;" src="https://picsum.photos/50/50/?random"/></td>              
-              <td>{{ category.userName }}</td>
-              <td>{{ category.location }}</td>
-              <td><a href="" class="btn btn-danger">Chat</a></td>
+              <td>{{ item.userName }}</td>
+              <td>{{ item.location }}</td>
+              <td><a style="cursor:pointer;color:white;" onclick="showUserProfile({{item.id}});" class="btn btn-danger">View</a></td>
+              <td><a href="" class="btn btn-danger">Chat</a></td>              
             </tr>
           {% endfor %}
         {% else %}
@@ -38,3 +40,18 @@
         </tbody>
       </table>
   </div>
+  <script>
+        function showUserProfile(id) {
+            $.ajax({     
+                async: true,                                 
+                url: './profile/1',              
+                type: "get",          
+                dataType: 'html',                
+                success: function(data){
+                    console.log(data);
+                    $("#content").html(data);
+                } 
+            });                 
+        }
+  </script>
+
