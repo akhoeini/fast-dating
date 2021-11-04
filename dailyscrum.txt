@@ -114,3 +114,9 @@ Kevin:
    1: Focused on web services. No work planned.
    2: Advance on profile handling (edit for own profile) including validation
    3: Time management + divided attention
+
+Day 8 (11/3/2021):
+Shengguang:
+   1: mock user data 
+   2: fix tinder swipe feature bug      
+   3: no
