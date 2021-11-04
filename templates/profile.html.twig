@@ -4,8 +4,10 @@
 <div class="wrapper">
 	<h4 class="profile_username">{{ u.userName }}</h4>
 	<div class="profile_main_photo">
-		<img src="https://images.pexels.com/photos/1037995/pexels-photo-1037995.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" class="img" alt="">
-	</div>
+    {% for picture in pics %}
+		<img src="../{{ picture.url }}" class="img" alt="" width="350px">
+	{% endfor %}
+    </div>
     <div class="profile_age">
     <p>{{ u.birthDate }} years old</p>
     </div>
