@@ -214,17 +214,16 @@ footer {
 
         function showProfile() {
             //for test
-             $("#content").load("./templates/editprofile.html.twig");
-            // $.ajax({     
-            //     async: true,                                 
-            //     url: './templates/editprofile.html.twig',              
-            //     type: "get",          
-            //     dataType: 'html',                
-            //     success: function(data){
-            //         console.log(data);
-            //         $("#content").html(data);
-            //     } 
-            // });               
+            $.ajax({     
+                async: true,                                 
+                url: './profile/1',              
+                type: "get",          
+                dataType: 'html',                
+                success: function(data){
+                    console.log(data);
+                    $("#content").html(data);
+                } 
+            });               
         }        
 
         function showPhoto() {
