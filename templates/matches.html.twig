@@ -57,7 +57,7 @@
               <td>{{ item.userName }}</td>
               <td>{{ item.location }}</td>
               <td><a style="cursor:pointer;color:white;" onclick="showUserProfile({{item.id}});" class="btn btn-danger">View</a></td>
-              <td><a href="" class="btn btn-danger">Chat</a></td>              
+              <td><a style="cursor:pointer;color:white;" onclick="showUserChat('{{item.userName}}');" class="btn btn-danger">Chat</a></td>
             </tr>
           {% endfor %}
         {% else %}
@@ -67,6 +67,10 @@
       </table>
   </div>
   <script>
+        function showUserChat(userName) {
+            alert("TODO: chat with " + userName);
+        }
+
         function showUserProfile(id) {
             $.ajax({     
                 async: true,                                 

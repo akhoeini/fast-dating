@@ -148,4 +148,8 @@ Kevin:
    2: Profile view implementation
    3: no
 
-
+Day 9 (11/4/2021):
+Shengguang:
+   1: profile and matches pages intergration into main page
+   2: fix matches page
+   3: need to fix the problem of multiple css style in sub pages
