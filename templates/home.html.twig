@@ -137,24 +137,6 @@ footer {
 <body>
     <header>
         <h1>Fast-Dating</h1>     
-         <nav id="nav-bar" class="main-nav">
-            <ul>
-               <li>                  
-                  <i class="fa fa-question-circle" style="color: whitesmoke;"></i>
-                  <a href="#about" class="nav-link">About</a>
-               </li>
-               <li>
-                  <i class="fa fa-phone-square" style="color: whitesmoke;"></i>
-                  <a href="#products" class="nav-link">Contact</a>
-               </li>
-               <li>
-                  <i class="fa fa-sign-out" style="color: whitesmoke;"></i>
-                  <a href="#contact" class="nav-link">Logout</a>
-               </li>
-               <li>
-            </ul>
-         </nav>
-
     </header> 
     <div class="main">
         <div class="sidebar">
@@ -214,9 +196,10 @@ footer {
 
         function showProfile() {
             //for test
-            $.ajax({     
+            //$("#content").load("./templates/editprofile.html.twig");
+             $.ajax({     
                 async: true,                                 
-                url: './profile/1',              
+                url: './profile',              
                 type: "get",          
                 dataType: 'html',                
                 success: function(data){
@@ -224,6 +207,7 @@ footer {
                     $("#content").html(data);
                 } 
             });               
+        
         }        
 
         function showPhoto() {
