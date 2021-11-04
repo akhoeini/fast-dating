@@ -22,12 +22,13 @@ $app->get('/login', function ($request, $response, $args) {
 $app->get('/profile/{uId:[0-9]+}', function($request, $response, $args) {
 
     $userInfo = DB::queryFirstRow("SELECT * FROM users WHERE id=%i", $args['uId']);
+    $userPhotos = DB::query("SELECT p.name, p.description, p.url FROM albums as 'a', photo as 'p' WHERE a.ownerId=%i AND a.id = p.albumId", $args['uId']);
     if (!$userInfo) {
         throw new \Slim\Exception\NotFoundException($request, $response);
     } else {
         // Will display 'edit profile' button if user is viewing own profile
         $isOwnProfile = ($args['uId'] == $_SESSION['userId']);
-        return $this->view->render($response, 'profile.html.twig', ['u' => $userInfo, 'ownProfile' => $isOwnProfile] );
+        return $this->view->render($response, 'profile.html.twig', ['u' => $userInfo, 'pics' => $userPhotos, 'ownProfile' => $isOwnProfile] );
     }
 });
 
