@@ -142,3 +142,10 @@ Shengguang:
    1: mock user data 
    2: fix tinder swipe feature bug      
    3: no
+
+Kevin:
+   1: Profile view planning
+   2: Profile view implementation
+   3: no
+
+
