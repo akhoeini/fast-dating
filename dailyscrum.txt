@@ -76,12 +76,24 @@ Kevin:
    2: Continue profile handling.
    3: no.
 
+Amin:
+   1: implementing the login UI.
+   2: reading about google Auth 2.
+   3: no.   
+
 
 Day 5 (10/29/2021):
 Kevin:
    1: Reviewed Slim documentation.
    2: Continue profile handling.
    3: no.
+
+
+Amin:
+   1: implementing the signup UI.
+   2: reading about Facebook Auth 2.
+   3: no.
+
 
 Shengguang:
    1: test nodejs express framework and socket.io
@@ -102,6 +114,11 @@ Kevin:
    2: Focus on web services today - return to project tomorrow
    3: no
 
+Amin:
+   1: Discussed profile handling strategy with Kevin
+   2: Implementing the Ui of edit profile
+   3: no   
+
 
 Day 7 (11/2/2021):
 Shengguang:
@@ -114,3 +131,14 @@ Kevin:
    1: Focused on web services. No work planned.
    2: Advance on profile handling (edit for own profile) including validation
    3: Time management + divided attention
+
+Amin:
+   1: reading about laravel frame work for implementing the apies for register, login, 
+   2: implementing the register and login apies changing some database colomn to enum;
+   3: i was so silly last week i was sick and also had an interview that i sould read for that+ lots of new thing about nodeJS  
+
+Day 8 (11/3/2021):
+Shengguang:
+   1: mock user data 
+   2: fix tinder swipe feature bug      
+   3: no

@@ -1,0 +1,40 @@
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+
+    <style>
+      .matches_container{
+        width:100vh;
+        height:100vh;
+      }
+    </style>
+
+  <div class="matches_container">
+      <div>
+        <div>
+          <h2>My Matches</h2>
+        </div>
+      </div>
+      <table class="table table-bordered">
+        <thead class="thead-default">
+        <tr>
+          <th style="width: 70px">Photo</th>
+          <th>Name</th>
+          <th>Location</th>
+          <th>Options</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% if categories is iterable %}
+          {% for category in categories %}
+            <tr>
+              <td><img style="border-radius: 50%;" src="https://picsum.photos/50/50/?random"/></td>              
+              <td>{{ category.userName }}</td>
+              <td>{{ category.location }}</td>
+              <td><a href="" class="btn btn-danger">Chat</a></td>
+            </tr>
+          {% endfor %}
+        {% else %}
+          <p class="text-secondary">No Matches</p>
+        {% endif %}
+        </tbody>
+      </table>
+  </div>

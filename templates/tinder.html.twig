@@ -1,3 +1,8 @@
+<link rel="stylesheet" type="text/css" href="./css/jTinder.css">
+<script type="text/javascript" src="./js/jquery.min.js"></script>
+<script type="text/javascript" src="./js/jquery.transform2d.js"></script>
+<script type="text/javascript" src="./js/jquery.jTinder.js"></script>    
+
 <div class="wrap">
     <div id="tinderslide">
         <ul>
@@ -45,7 +50,6 @@
 </div>
 
 <script>
-
     $("#tinderslide").jTinder({
         onDislike: function (item) {
             if(item.index() == 0){
