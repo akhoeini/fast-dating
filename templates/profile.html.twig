@@ -31,4 +31,12 @@
 		</div>
 	{% endif %}
 
+    {% if ownProfile == false %}
+		<div class="message_btn">
+			<form action="/message/{{ uId }}">
+				<input type="submit" value="Send Message"/>
+			</form>
+		</div>
+	{% endif %}
+
 {% endblock content %}
