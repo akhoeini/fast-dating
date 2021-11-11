@@ -160,3 +160,8 @@ Kevin:
    1: non-working day (exam)
    2: discuss speed-date implementation plan with Amin; work on profile view/edit
    3: no
+
+Shengguang:
+   1: exam
+   2: work on chat feature
+   3: no

@@ -1,43 +1,85 @@
     <link rel="stylesheet" href="./css/bootstrap.min.css">
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <style>
-      body {
-        font-family:Verdana, Arial, sans-serif;
-      }
+.matches_container{
+  width:100vh;
+  height:100vh;
+  margin: 0 auto;
+}
 
-      header {          
-          background-color: #869dc7;
-          color: #b1b1d3; 
-          font-size: 120%; 
-          padding: 10px 10px 10px 10px;
-          background-repeat: no-repeat;
-          background-color: rgb(190, 13, 119);
-          height: 80px;
-          display: flex;
-          flex-direction: row;
-          z-index: 1;
-      }
+.overlay-form {
+  position:absolute;
+  top:50vh;
+  left:0px;
+  width:100vw;
+  height:0vh;
+  background:rgba(54, 54, 54, 0.8);
+  color:rgb(201, 193, 193);
+  z-index:-1;
+  opacity:0;
+  padding:80px 100px;
+  box-sizing:border-box;
+  transition: 0.5s;
+  overflow-x: hidden;
+}
 
-      h1 {
-          position: relative;
-          margin:auto;
-          margin-left:10px;    
-          color: rgb(255,255,255);
-      }
+.close-btn {
+  position:absolute;
+  top:10px;
+  right:40px;
+  color:white;
+  font-size:40px;
+  font-weight:600;
+  cursor:pointer;
+  z-index:3;
+}
 
+.overlay-form a:hover {
+  color: var(--btn-color);
+}
 
-      .matches_container{
-        width:100vh;
-        height:100vh;
-      }
+.overlay-form h1 {
+  font-size:32px;
+  color:#fff;
+}
 
-    </style>
+.overlay-form label {
+  margin-bottom: 10px;
+  display: block;
+}
+
+.overlay-form .btn {
+  padding: 12px;
+  margin: 10px 0;
+  border: none;
+  width: 100%;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 17px;
+  z-index:3;
+}
+
+.close-btn:hover {
+  color: white;  
+}
+
+.overlay-form hr {
+  border: 1px solid lightgrey;
+}
+
+body.activeForm .overlay-form {
+  z-index:1;
+  opacity:1;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+}
+    </style>  
 
   <div class="matches_container">
       <div>
-        <div>
           <h2>My Matches</h2>
-        </div>
       </div>
       <table class="table table-bordered">
         <thead class="thead-default">
@@ -65,10 +107,60 @@
         {% endif %}
         </tbody>
       </table>
-  </div>
-  <script>
+    </div>
+
+
+
+      <div id="chat" class="overlay-form" style="margin-top:-40px;"></div>
+      <div id="profile" class="overlay-form" style="margin-top:-40px;"></div>
+      <a id="close-btn" class="close-btn" onclick="selectTours()" style="display:none;color:white;">&times;</a>         
+
+    <script>  
+         function selectTours() {
+           document.body.classList.toggle('activeForm');
+           $("#close-btn").hide();
+           var message = {id:"closeChat", data:""};
+          document.getElementById('child').contentWindow.postMessage(JSON.stringify(message), 
+            "http://127.0.0.1:9000/chat.html")             
+         }
+
+        $(document).ready(function() {
+           var data = "<iframe id='child' src='http://127.0.0.1:9000/chat.html?name=Mike&room=111'" + 
+                       "width='100%' height='100%'" + 
+                       "frameborder='no' border='0' marginwidth='0' marginheight='0' style='padding-left:0px;' scrolling='no'></iframe> ";
+           $("#chat").html(data);
+
+          $("#profile").hide();
+          $("#chat").hide();           
+        })
+
         function showUserChat(userName) {
-            alert("TODO: chat with " + userName);
+            /*
+            $.ajax({     
+                async: true,                                 
+                //url: 'http://3.14.66.20:9000/chat.html?name=ddd&room=111',
+                url: 'http://localhost:9000/',
+                type: "get",          
+                dataType: 'html',                
+                success: function(data){
+                    $("#content").html(data);
+                } 
+            });                 
+            */
+           //var data = "<iframe src='http://3.14.66.20:9000/chat.html?name=ddd&room=111' width='900px' height='900px'></iframe> ";
+
+           $("#profile").hide();
+           $("#chat").show();
+           $("#close-btn").show();
+           document.body.classList.toggle('activeForm');
+
+        // document.getElementById('child')
+        //  .contentWindow.postMessage("JJ6dnqsDhKmUHMM4AAAC", 
+        //     "http://127.0.0.1:9000/chat.html")           
+
+           var message = {id:"openChat", data:"JJ6dnqsDhKmUHMM4AAAC"};
+          document.getElementById('child').contentWindow.postMessage(JSON.stringify(message), 
+            "http://127.0.0.1:9000/chat.html")        
         }
 
         function showUserProfile(id) {
@@ -78,10 +170,19 @@
                 type: "get",          
                 dataType: 'html',                
                 success: function(data){
-                    console.log(data);
-                    $("#content").html(data);
+                    $("#profile").html(data);
+                    $("#profile").show();
+                    $("#chat").hide();
+                    $("#close-btn").show();
+                    document.body.classList.toggle('activeForm');
                 } 
             });                 
         }
+
+      window.addEventListener('message', function (e) {
+          console.log(e.data)  //e.data为传递过来的数据
+          console.log(e.origin)  //e.origin为调用 postMessage 时消息发送方窗口的 origin（域名、协议和端口）
+          //console.log(e.source)  //e.source为对发送消息的窗口对象的引用，可以使用此来在具有不同origin的两个窗口之间建立双向通信
+      }, false);       
   </script>
 

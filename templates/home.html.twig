@@ -86,6 +86,8 @@ text-decoration: none;
     margin:auto;
     z-index: 0;
     padding-top: auto;
+    width:100%;
+    height:100%;    
 } 
 
 footer {
@@ -141,13 +143,13 @@ footer {
          <div class="main-nav">
             <ul>
                <li>                  
-                  <a href="" class="nav-link">About</a>
+                  <a href="#about" class="nav-link">About</a>
                </li>
                <li>
-                  <a href="" class="nav-link">Contact</a>
+                  <a href="#contact" class="nav-link">Contact</a>
                </li>
                <li>
-                  <a href="" class="nav-link">Logout</a>
+                  <a href="#logout" class="nav-link">Logout</a>
                </li>                           
             </ul>
          </div>             
@@ -174,7 +176,7 @@ footer {
         });        
 
         function showRecommendation() {            
-            $("#content").load("./templates/tinder.html.twig");
+            //$("#content").load("./templates/tinder.html.twig");
             
             // $.ajax({     
             //     async: true,                                 
@@ -186,21 +188,29 @@ footer {
             //         $("#content").html(data);
             //     } 
             // });            
+
+            var data = "<iframe src='./recommend' width='100%' height='100%'" +
+                       "frameborder='no' border='0' marginwidth='0' marginheight='0' style='padding-left:0px;'></iframe> ";        
+            $("#content").html(data);
         }
 
         function showMatches() {
             //for test
              //$("#content").load("./templates/matches.html.twig");
-            $.ajax({     
-                async: true,                                 
-                url: './matches',              
-                type: "get",          
-                dataType: 'html',                
-                success: function(data){
-                    console.log(data);
-                    $("#content").html(data);
-                } 
-            });                 
+            // $.ajax({     
+            //     async: true,                                 
+            //     url: './matches',              
+            //     type: "get",          
+            //     dataType: 'html',                
+            //     success: function(data){
+            //         $("#content").html(data);
+            //     } 
+            // });                 
+
+            var data = "<iframe src='./matches' width='100%' height='100%'" + 
+                       "frameborder='no' border='0' marginwidth='0' marginheight='0' style='padding-left:0px;'></iframe> ";        
+            $("#content").html(data);
+
         }
 
         function showLikes() {
@@ -211,17 +221,19 @@ footer {
         function showProfile() {
             //for test
             //$("#content").load("./templates/editprofile.html.twig");
-             $.ajax({     
-                async: true,                                 
-                url: './profile',              
-                type: "get",          
-                dataType: 'html',                
-                success: function(data){
-                    console.log(data);
-                    $("#content").html(data);
-                } 
-            });               
-        
+
+            //  $.ajax({     
+            //     async: true,                                 
+            //     url: './profile',              
+            //     type: "get",          
+            //     dataType: 'html',                
+            //     success: function(data){
+            //         $("#content").html(data);
+            //     } 
+            // });               
+            var data = "<iframe src='./profile' width='100%' height='100%'" + 
+                       "frameborder='no' border='0' marginwidth='0' marginheight='0' style='padding-left:0px;'></iframe> ";        
+            $("#content").html(data);
         }        
 
         function showPhoto() {

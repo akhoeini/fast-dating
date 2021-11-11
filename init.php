@@ -23,11 +23,22 @@ if (strpos($_SERVER['HTTP_HOST'], "fsd01.ca") !== false) {
     DB::$user = 'cp5016_dating';
     DB::$password = 'TTJYrGR.g#.X';
 }else{
+    // DB::$dbName = 'cp5016_dating';
+    // DB::$user = 'root';
+    // DB::$password = '';
+    // DB::$host = 'localhost';
+    // DB::$port = 3306;
     DB::$dbName = 'day06slimauctions';
     DB::$user = 'day06slimauctions';
     DB::$password = '.(S.Mo8p6cYuty5F';
     DB::$host = 'localhost';
     DB::$port = 3333;
+
+    // DB::$dbName = 'dating';
+    // DB::$user = 'dating';
+    // DB::$password = '.2u0)]h6EiMSzVbz';
+    // DB::$host = 'localhost';
+    // DB::$port = 3306;
 }
 
 // Name:cp5016_dating
@@ -46,7 +57,7 @@ function db_error_handler($params) {
     // this was tricky to find - getting access to twig rendering directly, without PHP Slim
     http_response_code(500); // internal server error
     $twig = $container['view']->getEnvironment();
-    die($twig->render('error_internal.html.twig'));
+    // die($twig->render('error_internal.html.twig'));
     // Note: the above trick may also be useful to render a template into an email body
     //header("Location: /internalerror"); // another possibility, not my favourite
 }
