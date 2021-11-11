@@ -153,3 +153,9 @@ Shengguang:
    1: profile and matches pages intergration into main page
    2: fix matches page
    3: need to fix the problem of multiple css style in sub pages
+
+Day 11 (11/10/2021):
+Shengguang:
+   1: exam
+   2: work on chat feature
+   3: no
