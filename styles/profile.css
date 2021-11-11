@@ -2,12 +2,12 @@
 * {
     margin: 0;
     padding: 0;
-    box-sizing: border-box
+    box-sizing: border-box;
 }
 
 body {
     font-family: 'Poppins', sans-serif;
-    background-color: aliceblue
+    background-color: aliceblue;
 }
 
 .wrapper {
@@ -20,7 +20,8 @@ body {
 
 h4 {
     letter-spacing: -1px;
-    font-weight: 400
+    font-weight: 400;
+    text-align: right;
 }
 
 .img {
@@ -35,13 +36,13 @@ h4 {
     font-size: 12px;
     color: #777;
     margin-bottom: 10px;
-    text-align: justify
+    text-align: justify;
 }
 
 #img-section b,
 #img-section button,
 #deactivate b {
-    font-size: 14px
+    font-size: 14px;
 }
 
 label {
@@ -53,16 +54,16 @@ label {
 }
 
 .form-control {
-    border-radius: 10px
+    border-radius: 10px;
 }
 
 input[placeholder] {
-    font-weight: 500
+    font-weight: 500;
 }
 
 .form-control:focus {
     box-shadow: none;
-    border: 1.5px solid #0779e4
+    border: 1.5px solid #0779e4;
 }
 
 select {
@@ -71,47 +72,51 @@ select {
     border: 1px solid #ddd;
     border-radius: 10px;
     height: 40px;
-    padding: 5px 10px
+    padding: 5px 10px;
 }
 
 select:focus {
-    outline: none
+    outline: none;
 }
 
 .button {
     background-color: #fff;
-    color: #0779e4
+    color: #0779e4;
 }
 
 .button:hover {
     background-color: #0779e4;
-    color: #fff
+    color: #fff;
 }
 
 .btn-primary {
-    background-color: #0779e4
+    background-color: #0779e4;
 }
 
 .danger {
     background-color: #fff;
     color: #e20404;
-    border: 1px solid #ddd
+    border: 1px solid #ddd;
 }
 
 .danger:hover {
     background-color: #e20404;
-    color: #fff
+    color: #fff;
 }
 
 @media(max-width:576px) {
     .wrapper {
-        padding: 25px 20px
+        padding: 25px 20px;
     }
     #deactivate {
-        line-height: 18px
+        line-height: 18px;
     }
 }
 
 .splide li img {
     object-fit: cover;
+}
+
+#firstName {
+    color: rgb(190, 13, 119);
 }
