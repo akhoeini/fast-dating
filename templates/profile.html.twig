@@ -1,47 +1,56 @@
 {% extends "master.html.twig" %}
 
 {% block addHead %}
-<link rel="stylesheet" href="./styles/profile.css">
+	<link rel="stylesheet" href="../styles/profile.css">
 {% endblock %}
 
 {% block content %}
-<div class="wrapper">
-	<h4 class="profile_username">{{ u.userName }}</h4>
-	<div class="profile_main_photo">
-    {% for picture in pics %}
-		<img src="{{ picture.url }}" class="{{ loop.first ? 'profile-photo-main' : 'profile-photo-secondary' }} profile-photo" alt="" width="{{ loop.first ? '350px' : '100px' }}">
-	{% endfor %}
-    </div>
-    <div class="profile_age">
-    <p>{{ u.birthDate | age }} years old</p>
-    </div>
-    <div class="profile_bio">
-    <p>{{ u.bio }}</p>
-    </div>
-    <div class="profile_interests">
-    <ul>
-    {% for i in interests %}
-    <li>{{ i }}</li>
-	{% endfor %}
-    </ul>
-    </div>
-
-	{% if ownProfile %}
-		<div class="edit_profile_btn">
-			<form action="/edit_profile/{{ uId }}">
-				<input type="submit" value="Edit Your Profile"/>
-			</form>
+	<div class="wrapper">
+		<h4 class="profile_header"><span id="firstName">{{ u.firstName }}</span> &bull; {{ date('now').diff((date(u.birthDate))).format('%y') }} &bull; Montreal </h4>
+		<div class="splide">
+			<div class="splide__track">
+				<ul class="splide__list">
+					{% for picture in pics %}
+						<li class="splide__slide"><img src="../{{ picture.url }}" alt="profile photo" width="538px" height="538px"></li>
+					{% endfor %}
+				</ul>
+			</div>
 		</div>
-	{% endif %}
-
-    {% if ownProfile == false %}
-		<div class="message_btn">
-			<form action="/message/{{ uId }}">
-				<input type="submit" value="Send Message"/>
-			</form>
+		<script>
+			console.log("splide mounting");
+			var splide = new Splide('.splide');
+			splide.mount();
+		</script>
+		<div class="profile_age">
+			<p>{{ date('now').diff((date(u.birthDate))).format('%y years old') }}</p>
 		</div>
-	{% endif %}
+		<div class="profile_bio">
+			<p>{{ u.bio }}</p>
+		</div>
+		<div class="profile_interests">
+			<ul>
+				{% for i in interests %}
+					<li>{{ i }}</li>
+				{% endfor %}
+			</ul>
+		</div>
 
-    </div>
+		{% if ownProfile %}
+			<div class="edit_profile_btn">
+				<form action="/edit_profile/{{ uId }}">
+					<input type="submit" value="Edit Your Profile"/>
+				</form>
+			</div>
+		{% endif %}
+
+		{% if ownProfile == false %}
+			<div class="message_btn">
+				<form action="/message/{{ uId }}">
+					<input type="submit" value="Send Message"/>
+				</form>
+			</div>
+		{% endif %}
+
+	</div>
 
 {% endblock content %}
