@@ -15,6 +15,10 @@ $app->get('/login', function ($request, $response, $args) {
     return $this->view->render($response, 'login.html.twig');
  });
 
+ $app->get('/recommend', function ($request, $response, $args) {
+    return $this->view->render($response, 'tinder.html.twig');
+ });
+
  $app->get('/profile', function ($request, $response, $args) {
     return $this->view->render($response, 'editprofile.html.twig');
  });
@@ -46,9 +50,10 @@ $app->get('/matches', function ($request, $response, $args) {
     for($i = 0; $i < 4; $i++)
     {
         $id = rand(1, 1000);
+        $photo = rand(1, 100);
         $userItem = new MatchUser();
         $userItem->id = $id;
-        $userItem->photo = $id;
+        $userItem->photo = $photo;
         $userItem->userName = 'sedan' . $id;
         $userItem->location = 'Montreal';        
         $data["items"] []= $userItem;        
