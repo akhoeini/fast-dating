@@ -154,7 +154,13 @@ Shengguang:
    2: fix matches page
    3: need to fix the problem of multiple css style in sub pages
 
-Day 11 (11/10/2021):
+
+Day 10 (11/10/2021):
+Kevin:
+   1: non-working day (exam)
+   2: discuss speed-date implementation plan with Amin; work on profile view/edit
+   3: no
+
 Shengguang:
    1: exam
    2: work on chat feature

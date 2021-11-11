@@ -13,7 +13,7 @@
 	{% endfor %}
     </div>
     <div class="profile_age">
-    <p>{{ u.birthDate }} years old</p>
+    <p>{{ u.birthDate | age }} years old</p>
     </div>
     <div class="profile_bio">
     <p>{{ u.bio }}</p>
