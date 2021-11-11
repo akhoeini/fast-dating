@@ -5,7 +5,7 @@ $(document).ready(function() {
             alert("everything okey");
         }
 
-        signUp($("#username").val(), $("#email").val(), $("#password").val());
+        signup($("#username").val(), $("#email").val(), $("#password").val());
     });
 });
 
@@ -80,17 +80,25 @@ function checkForm() {
 }
 
 function signup(username, email, password) {
+    var newUser = JSON.stringify({
+        username: username,
+        email: email,
+        password: password,
+        role: user,
+
+    });
     $.ajax({
-        url: '/todos/' + id,
-        type: 'GET',
+        url: '/signup',
+        type: 'POST',
+        data: newUser,
         dataType: 'json',
+        headers: { "Content-Type": "application/json; charset=UTF-8" },
         error: function(jqxhr, status, errorThrown) {
             httpErrorHandler(jqxhr, status, errorThrown);
         }
-    }).done(function(data) {
-        $("#task").val(data.task);
-        $("#dueDate").val($.format.date(data.dueDate, "yyyy-mm-dd"));
-        $("#status").val(data.status);
-        editId = id;
+    }).done(function(newId) {
+        alert("Record created with ID " + newId);
+    }).always(function() {
+
     });
 }
