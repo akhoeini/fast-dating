@@ -2,10 +2,9 @@ $(document).ready(function() {
     // alert("sign up js");
     $("#signup").click(function() {
         if (checkForm()) {
-            alert("everything okey");
+            alert("form fields okey");
+            signup($("#username").val(), $("#email").val(), $("#password").val());
         }
-
-        signup($("#username").val(), $("#email").val(), $("#password").val());
     });
 });
 
@@ -83,9 +82,7 @@ function signup(username, email, password) {
     var newUser = JSON.stringify({
         username: username,
         email: email,
-        password: password,
-        role: user,
-
+        password: password
     });
     $.ajax({
         url: '/signup',
@@ -96,8 +93,10 @@ function signup(username, email, password) {
         error: function(jqxhr, status, errorThrown) {
             httpErrorHandler(jqxhr, status, errorThrown);
         }
-    }).done(function(newId) {
-        alert("Record created with ID " + newId);
+    }).done(function(responseJSON) {
+        var result = JSON.parse(JSON.stringify(responseJSON));
+        window.localStorage.setItem("fastdating-token", result.token);
+        alert("Record created successfuly");
     }).always(function() {
 
     });
