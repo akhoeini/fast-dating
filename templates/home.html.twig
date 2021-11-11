@@ -4,11 +4,7 @@
 <title>Fast-Dating MyTinder</title>
 <meta charset="utf-8">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" type="text/css" href="./css/jTinder.css">
-
 <script type="text/javascript" src="./js/jquery.min.js"></script>
-<script type="text/javascript" src="./js/jquery.transform2d.js"></script>
-<script type="text/javascript" src="./js/jquery.jTinder.js"></script>
 <style>
 body {
     font-family:Verdana, Arial, sans-serif;
@@ -170,9 +166,17 @@ footer {
     </div> 
 
     <script>
+        var userName = "{{nameVal}}";
+        var userId = "{{idVal}}";
+
+        window.datingApp = {} || window.datingApp;        
 
         $(document).ready(function() {
             showRecommendation();
+
+            console.log("username", userName);
+            window.datingApp.userName = userName;
+            window.datingApp.userId = userId;
         });        
 
         function showRecommendation() {            

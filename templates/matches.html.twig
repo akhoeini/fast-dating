@@ -75,6 +75,14 @@ body.activeForm .overlay-form {
   width: 100%;
   height: 100%;
 }
+
+.message {
+  height: 25px;
+  width: 25px;
+  background-color: red;
+  border-radius: 50%;
+  display: inline-block;
+}
     </style>  
 
   <div class="matches_container">
@@ -98,8 +106,11 @@ body.activeForm .overlay-form {
               <td><img style="border-radius: 50%;" src="https://picsum.photos/id/{{item.photo}}/60/60/"/></td>              
               <td>{{ item.userName }}</td>
               <td>{{ item.location }}</td>
-              <td><a style="cursor:pointer;color:white;" onclick="showUserProfile({{item.id}});" class="btn btn-danger">View</a></td>
-              <td><a style="cursor:pointer;color:white;" onclick="showUserChat('{{item.userName}}');" class="btn btn-danger">Chat</a></td>
+              <td><a style="cursor:pointer;color:white;" onclick="showUserProfile({{item.id}});" class="btn btn-primary">View</a></td>
+              <td>
+                <a style="cursor:pointer;color:white;" onclick="showUserChat('{{item.id}}');" class="btn btn-primary">Chat</a>
+                <div id="message{{item.id}}" class="message" style="display:none;"></div>
+              </td>
             </tr>
           {% endfor %}
         {% else %}
@@ -113,19 +124,29 @@ body.activeForm .overlay-form {
 
       <div id="chat" class="overlay-form" style="margin-top:-40px;"></div>
       <div id="profile" class="overlay-form" style="margin-top:-40px;"></div>
-      <a id="close-btn" class="close-btn" onclick="selectTours()" style="display:none;color:white;">&times;</a>         
+      <a id="close-btn" class="close-btn" onclick="closeActiveFrom()" style="display:none;color:white;">&times;</a>         
 
-    <script>  
-         function selectTours() {
+    <script>
+         var chatUserList = null;
+
+         function closeActiveFrom() {
            document.body.classList.toggle('activeForm');
            $("#close-btn").hide();
+
+           if($("#chat").css("display") == 'none')
+              return;
+
            var message = {id:"closeChat", data:""};
-          document.getElementById('child').contentWindow.postMessage(JSON.stringify(message), 
+           document.getElementById('child').contentWindow.postMessage(JSON.stringify(message), 
             "http://127.0.0.1:9000/chat.html")             
          }
 
         $(document).ready(function() {
-           var data = "<iframe id='child' src='http://127.0.0.1:9000/chat.html?name=Mike&room=111'" + 
+           window.datingApp = parent.datingApp;
+           var userName = window.datingApp.userName;
+           var userId = window.datingApp.userId;
+
+           var data = "<iframe id='child' src='http://127.0.0.1:9000/chat.html?uid=" + userId + "&name=" + userName + "&room=111'" + 
                        "width='100%' height='100%'" + 
                        "frameborder='no' border='0' marginwidth='0' marginheight='0' style='padding-left:0px;' scrolling='no'></iframe> ";
            $("#chat").html(data);
@@ -134,7 +155,7 @@ body.activeForm .overlay-form {
           $("#chat").hide();           
         })
 
-        function showUserChat(userName) {
+        function showUserChat(uid) {
             /*
             $.ajax({     
                 async: true,                                 
@@ -154,11 +175,21 @@ body.activeForm .overlay-form {
            $("#close-btn").show();
            document.body.classList.toggle('activeForm');
 
-        // document.getElementById('child')
-        //  .contentWindow.postMessage("JJ6dnqsDhKmUHMM4AAAC", 
-        //     "http://127.0.0.1:9000/chat.html")           
+           var userId = "";
+          for (let user of chatUserList) {
+            console.log("check user", uid, user.name, user.uid, user.id);
+            if(uid == user.uid) {
+              userId = user.id;
+              break;
+            }
+          }
+          if(userId == "") 
+            return;
 
-           var message = {id:"openChat", data:"JJ6dnqsDhKmUHMM4AAAC"};
+          var message = {
+             id:"openChat", 
+             data: userId
+          };
           document.getElementById('child').contentWindow.postMessage(JSON.stringify(message), 
             "http://127.0.0.1:9000/chat.html")        
         }
@@ -180,9 +211,17 @@ body.activeForm .overlay-form {
         }
 
       window.addEventListener('message', function (e) {
-          console.log(e.data)  //e.data为传递过来的数据
-          console.log(e.origin)  //e.origin为调用 postMessage 时消息发送方窗口的 origin（域名、协议和端口）
-          //console.log(e.source)  //e.source为对发送消息的窗口对象的引用，可以使用此来在具有不同origin的两个窗口之间建立双向通信
+          console.log(e.data)
+
+          var message = JSON.parse(e.data);
+          if(message.id == "updateUserList"){
+              chatUserList = message.data;             
+          }
+          else if(message.id == "message"){
+              console.log("recv", message.data);
+              //$("#message3").show();
+          }
+
       }, false);       
   </script>
 
