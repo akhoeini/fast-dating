@@ -120,3 +120,24 @@ select:focus {
 #firstName {
     color: rgb(190, 13, 119);
 }
+
+.profile_bio {
+    margin-top: 15px;
+}
+
+.profile_interests ul {
+    width: 100%;
+    display: table;
+    text-align: center;
+}
+
+.profile_interests li {
+    display: inline-block;
+    float: none;
+    border: 2px solid rgb(190, 13, 119);
+    padding: 5px;
+    margin-right: 12px;
+    border-radius: 10px;
+    font-style: italic;
+    background-color: #efefef;
+}

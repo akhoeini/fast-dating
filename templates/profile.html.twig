@@ -6,7 +6,7 @@
 
 {% block content %}
 	<div class="wrapper">
-		<h4 class="profile_header"><span id="firstName">{{ u.firstName }}</span> &bull; {{ date('now').diff((date(u.birthDate))).format('%y') }} &bull; Montreal </h4>
+		<h4 class="profile_header"><span id="firstName">{{ u.firstName }}</span> &bull; {{ date('now').diff((date(u.birthDate))).format('%y') }} &bull; {{ u.location }} </h4>
 		<div class="splide">
 			<div class="splide__track">
 				<ul class="splide__list">
@@ -21,9 +21,6 @@
 			var splide = new Splide('.splide');
 			splide.mount();
 		</script>
-		<div class="profile_age">
-			<p>{{ date('now').diff((date(u.birthDate))).format('%y years old') }}</p>
-		</div>
 		<div class="profile_bio">
 			<p>{{ u.bio }}</p>
 		</div>
@@ -45,8 +42,8 @@
 
 		{% if ownProfile == false %}
 			<div class="message_btn">
-				<form action="/message/{{ uId }}">
-					<input type="submit" value="Send Message"/>
+				<form action="/message/{{ uId }}" style="text-align: center">
+					<input class="btn btn-primary" type="submit" value="Send Message"/>
 				</form>
 			</div>
 		{% endif %}
