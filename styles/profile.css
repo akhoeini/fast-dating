@@ -111,3 +111,7 @@ select:focus {
         line-height: 18px
     }
 }
+
+.splide li img {
+    object-fit: cover;
+}
