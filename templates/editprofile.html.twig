@@ -1,28 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-		<meta name="description" content="">
-		<meta name="author" content="">
+{% extends "master.html.twig" %}
 
-		<title>Profile</title>
+{% block addHead %}
+	<link rel="stylesheet" href="../styles/profile.css">
+{% endblock %}
 
-		<link
-		rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css" crossorigin="anonymous">
-
-
-		<!-- Custom styles for this template -->
-		<link href="./styles/profile.css" rel="stylesheet">
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-		<script src="./js/jquery.profile.js"></script>
-
-		<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	</head>
-	<body>
-		<div class="wrapper bg-white mt-sm-5">
+{% block content %}
+		<div class="wrapper">
 			<h4 class="pb-4 border-bottom">Account settings</h4>
 			<div class="d-flex align-items-start py-3 border-bottom">
 				<img src="https://images.pexels.com/photos/1037995/pexels-photo-1037995.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" class="img" alt="">
@@ -38,7 +21,7 @@
 				<div class="row py-2">
 					<div class="col-md-6">
 						<label for="firstname">First Name</label>
-						<input type="text" class="bg-light form-control" placeholder="John">
+						<input type="text" class="bg-light form-control" value="{{u.firstName}}">
 					</div>
 					<div class="col-md-6 pt-md-0 pt-3">
 						<label for="lastname">Last Name</label>
@@ -92,5 +75,5 @@
 				</div>
 			</div>
 		</div>
-	</body>
-</html>
+
+{% endblock content %}
