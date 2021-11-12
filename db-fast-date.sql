@@ -65,16 +65,26 @@ INSERT INTO `interests` (`id`, `name`, `description`, `type`) VALUES
 
 -- --------------------------------------------------------
 
---
--- Table structure for table `matches`
---
+CREATE TABLE `user_likes` (
+  `id` int(11) NOT NULL primary key auto_increment,
+  `user_id` int(11) NOT NULL,
+  `liked_user_id` int(11) NOT NULL,
+  `operation` enum('like','pass') NOT NULL,
+  `time` timestamp NOT NULL DEFAULT current_timestamp()
+);
+
+CREATE TABLE swipe_photos (
+  id int(11) not null primary key auto_increment,
+  user_id int(11) NOT NULL,  
+  image_name varchar(200) NOT NULL
+);
 
 CREATE TABLE `matches` (
-  `uId1` int(11) NOT NULL,
-  `uId2` int(11) NOT NULL,
-  `Id` int(11) NOT NULL,
-  `isActive` bit(1) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `id` int(11) NOT NULL primary key auto_increment,
+  `user_id` int(11) NOT NULL,
+  `matched_user_id` int(11) NOT NULL,
+  `time` timestamp NOT NULL DEFAULT current_timestamp()
+);
 
 -- --------------------------------------------------------
 
@@ -218,12 +228,6 @@ ALTER TABLE `interests`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `matches`
---
-ALTER TABLE `matches`
-  ADD PRIMARY KEY (`Id`);
-
---
 -- Indexes for table `message`
 --
 ALTER TABLE `message`
@@ -284,11 +288,6 @@ ALTER TABLE `albums`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `matches`
---
-ALTER TABLE `matches`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT for table `message`
 --
@@ -342,12 +341,6 @@ ALTER TABLE `albums`
   ADD CONSTRAINT `fkOwenerId` FOREIGN KEY (`ownerId`) REFERENCES `users` (`id`);
 
 --
--- Constraints for table `matches`
---
-ALTER TABLE `matches`
-  ADD CONSTRAINT `fkUId1` FOREIGN KEY (`Id`) REFERENCES `users` (`id`),
-  ADD CONSTRAINT `fkUId2` FOREIGN KEY (`Id`) REFERENCES `users` (`id`);
-
 --
 -- Constraints for table `message`
 --
