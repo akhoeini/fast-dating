@@ -45,12 +45,16 @@ h4 {
     font-size: 14px;
 }
 
-label {
+label, legend {
     margin-bottom: 0;
     font-size: 14px;
     font-weight: 500;
     color: #777;
     padding-left: 3px
+}
+
+label.checkbox {
+    color: #000000;
 }
 
 .form-control {
