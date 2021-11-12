@@ -186,6 +186,7 @@ CREATE TABLE `users` (
   `email` varchar(255) NOT NULL,
   `id` int(11) NOT NULL,
   `role` enum('admin','user') DEFAULT 'user',
+  `firstName` varchar(100),
   `birthDate` datetime DEFAULT NULL,
   `genderId` int(11) DEFAULT NULL,
   `bio` varchar(500) DEFAULT NULL,
