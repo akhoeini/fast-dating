@@ -15,7 +15,7 @@
 		<!-- Custom styles for this template -->
 		<link href="/styles/login.css" rel="stylesheet">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-		<script src="/jquery.login.js"></script>
+		<script src="./js/jquery.login.js"></script>
 
 		<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
@@ -26,7 +26,7 @@
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-sm-12">
-						<form class="md-float-material form-material" action="#" method="POST">
+						<div class="md-float-material form-material">
 							<div class="auth-box card">
 								<div class="card-block">
 									<div class="row">
@@ -42,8 +42,8 @@
 									</div>
 									<div class="row">
 										<div class="col-md-12">
-											<input
-											type="submit" class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20" name="submit" value="Login">
+											<input id="login"
+											type="submit" class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20" name="login" value="Login">
 										<!-- <button type="button" class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20"><i class="fa fa-lock"></i> Signup Now </button> -->
 										</div>
 									</div>
@@ -67,11 +67,11 @@
 									</div>
 									<br>
 									<p class="text-inverse text-center">Don't have an account yet?
-										<a href="" data-abc="true">Signup</a>
+										<a href="./signup" data-abc="true" id="signup-link">Signup</a>
 									</p>
 								</div>
 							</div>
-						</form>
+						</div>
 					</div>
 				</div>
 			</div>
