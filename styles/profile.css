@@ -32,6 +32,11 @@ h4 {
     margin-right: 12px;
 }
 
+.imgDelete {
+    color:rgb(190, 13, 119);
+    font-size: 10px;
+}
+
 #img-section p,
 #deactivate p {
     font-size: 12px;
