@@ -32,3 +32,14 @@ function verifyUploadedPhoto($photo, &$fileName) {
     $fileName = 'uploads/' . $sanitizedFileName . "." . $ext;
     return TRUE;
 }
+
+function debug_to_console($data) {
+    $output = $data;
+    if (is_array($output))
+        $output = json_encode($output);
+
+    echo "<script>console.log('Debug Objects: " . $output . "' );</script>";
+}
+
+
+

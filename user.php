@@ -142,10 +142,6 @@ $app->get('/login', function ($request, $response, $args) {
     return $this->view->render($response, 'login.html.twig');
 });
 
-$app->get('/recommend', function ($request, $response, $args) {
-    return $this->view->render($response, 'tinder.html.twig');
-});
-
 $app->get('/profile', function ($request, $response, $args) {
     return $this->view->render($response, 'editprofile.html.twig');
 });
@@ -164,26 +160,3 @@ $app->get('/profile/{uId:[0-9]+}', function ($request, $response, $args) {
     }
 });
 
-class MatchUser
-{
-    public $id;
-    public $photo;
-    public $userName;
-    public $location;
-}
-
-$app->get('/matches', function ($request, $response, $args) {
-    $data["items"] = array();
-    for ($i = 0; $i < 4; $i++) {
-        $id = rand(1, 1000);
-        $photo = rand(1, 100);
-        $userItem = new MatchUser();
-        $userItem->id = $id;
-        $userItem->photo = $photo;
-        $userItem->userName = 'sedan' . $id;
-        $userItem->location = 'Montreal';
-        $data["items"][] = $userItem;
-    }
-
-    return $this->view->render($response, 'matches.html.twig', $data);
-});

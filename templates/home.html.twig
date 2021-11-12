@@ -142,10 +142,11 @@ footer {
                   <a href="#about" class="nav-link">About</a>
                </li>
                <li>
-                  <a href="#contact" class="nav-link">Contact</a>
+                  <a onclick="uploadSwipePhoto()" class="nav-link">TestUpload</a>
                </li>
-               <li>
-                  <a href="#logout" class="nav-link">Logout</a>
+               <li>               
+                  <div style="color:yellow; position:relative;top:-30px;">{{nameVal}}</div>
+                  <a href="./logout" class="nav-link" style="position:relative;top:-25px;">Logout</a>
                </li>                           
             </ul>
          </div>             
@@ -153,7 +154,7 @@ footer {
     <div class="main">
         <div class="sidebar">
             <ul>
-            <li><a onclick="showRecommendation()">Recommendation</a></li>
+            <li><a onclick="showRecommendation()">Swipe</a></li>
             <li><a onclick="showMatches()">Matches</a></li>
             <li><a onclick="showLikes()">Likes</a></li>
             <li><a onclick="showProfile()">Profile</a></li>
@@ -169,7 +170,7 @@ footer {
         var userName = "{{nameVal}}";
         var userId = "{{idVal}}";
 
-        window.datingApp = {} || window.datingApp;        
+        window.datingApp = {} || window.datingApp;
 
         $(document).ready(function() {
             showRecommendation();
@@ -177,71 +178,35 @@ footer {
             console.log("username", userName);
             window.datingApp.userName = userName;
             window.datingApp.userId = userId;
+            window.datingApp.showRecommendation = showRecommendation;
         });        
 
-        function showRecommendation() {            
-            //$("#content").load("./templates/tinder.html.twig");
-            
-            // $.ajax({     
-            //     async: true,                                 
-            //     url: './templates/index.html',              
-            //     type: "get",          
-            //     dataType: 'html',                
-            //     success: function(data){
-            //         console.log(data);
-            //         $("#content").html(data);
-            //     } 
-            // });            
-
+        showRecommendation = function() {
             var data = "<iframe src='./recommend' width='100%' height='100%'" +
-                       "frameborder='no' border='0' marginwidth='0' marginheight='0' style='padding-left:0px;'></iframe> ";        
+                       " frameborder='no' border='0' marginwidth='0' marginheight='0' style='padding-left:0px;'></iframe> ";        
             $("#content").html(data);
         }
 
-        function showMatches() {
-            //for test
-             //$("#content").load("./templates/matches.html.twig");
-            // $.ajax({     
-            //     async: true,                                 
-            //     url: './matches',              
-            //     type: "get",          
-            //     dataType: 'html',                
-            //     success: function(data){
-            //         $("#content").html(data);
-            //     } 
-            // });                 
-
+        showMatches = function() {
             var data = "<iframe src='./matches' width='100%' height='100%'" + 
-                       "frameborder='no' border='0' marginwidth='0' marginheight='0' style='padding-left:0px;'></iframe> ";        
+                       " frameborder='no' border='0' marginwidth='0' marginheight='0' style='padding-left:0px;'></iframe> ";        
             $("#content").html(data);
 
         }
 
         function showLikes() {
-            //for test
-             $("#content").html("Likes");
+            var data = "<iframe src='./likes' width='100%' height='100%'" + 
+                       " frameborder='no' border='0' marginwidth='0' marginheight='0' style='padding-left:0px;'></iframe> ";        
+            $("#content").html(data);             
         }
 
-        function showProfile() {
-            //for test
-            //$("#content").load("./templates/editprofile.html.twig");
-
-            //  $.ajax({     
-            //     async: true,                                 
-            //     url: './profile',              
-            //     type: "get",          
-            //     dataType: 'html',                
-            //     success: function(data){
-            //         $("#content").html(data);
-            //     } 
-            // });               
+        function showProfile() {              
             var data = "<iframe src='./profile' width='100%' height='100%'" + 
-                       "frameborder='no' border='0' marginwidth='0' marginheight='0' style='padding-left:0px;'></iframe> ";        
+                       " frameborder='no' border='0' marginwidth='0' marginheight='0' style='padding-left:0px;'></iframe> ";        
             $("#content").html(data);
         }        
 
         function showPhoto() {
-            //for test
              $("#content").html("Photo");
         } 
         
@@ -249,6 +214,12 @@ footer {
             //for test
              $("#content").html("Message");
         }         
+
+        function uploadSwipePhoto() {
+            var data = "<iframe src='./photo1' width='100%' height='100%'" + 
+                       " frameborder='no' border='0' marginwidth='0' marginheight='0' style='padding-left:0px;'></iframe> ";        
+            $("#content").html(data);
+        }
     </script>
 </body>
 </html>

@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://fonts.googleapis.com/css?family=Tangerine:400,700" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>       
+    <style>
+        body {
+          /*background-color: #e90d77;*/
+          background-color: rgb(190, 13, 119);
+        }
+        
+        .title {
+          font-family: 'Tangerine', cursive;
+          font-size: 3em;
+          color: #fff;
+          margin: 0.2em 0 0 0;
+          padding-top: 20px;
+          align-items: center;
+          /*text-align: center;*/
+        }  
+
+        .content {
+          background: none;
+        }
+        
+        .wrapper {
+          position: unset;
+        }
+        
+        .register__box {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: 360px;
+          padding: 40px;
+          transform: translate(-50%, -50%);
+          background: rgba(0, 0, 0, 0.5);
+          box-sizing: border-box;
+          box-shadow: 0 15px 25px rgba(0, 0, 0, 0.6);
+          border-radius: 10px;
+        }
+        
+        .register__box h2 {
+          margin: 0 0 30px;
+          padding: 0;
+          color: #fff;
+          text-align: center;
+        }
+        
+        .register__box .user__box {
+          position: relative;
+        }
+        
+        .register__box .user__box input {
+          width: 100%;
+          padding: 10px 0;
+          font-size: 16px;
+          color: #fff;
+          margin-bottom: 30px;
+          border: none;
+          border-bottom: 1px solid #fff;
+          outline: none;
+          background: transparent;
+        }
+        .register__box .user__box label {
+          position: absolute;
+          top: 0;
+          left: 0;
+          padding: 10px 0;
+          font-size: 16px;
+          color: #fff;
+          pointer-events: none;
+          transition: 0.5s;
+        }
+        
+        .register__box .user__box input:focus ~ label,
+        .register__box .user__box input:valid ~ label {
+          top: -20px;
+          left: 0;
+          color: #e90d77;
+          font-size: 12px;
+        }
+        
+        .register__box form button {
+          position: relative;
+          display: inline-block;
+          padding: 10px 20px;
+          color: #e90d77;
+          font-size: 16px;
+          text-decoration: none;
+          text-transform: uppercase;
+          overflow: hidden;
+          transition: 0.5s;
+          margin-top: 40px;
+          letter-spacing: 4px;
+          background: none;
+          border: none;
+        }
+        
+        .register__box button:hover {
+          background: #e90d77;
+          color: #fff;
+          border-radius: 5px;
+          box-shadow: 0 0 5px #e90d77, 0 0 25px #e90d77, 0 0 50px #e90d77,
+            0 0 100px #e90d77;
+        }
+        
+        .register__box button span {
+          position: absolute;
+          display: block;
+        }
+        
+        .register__box button span:nth-child(1) {
+          top: 0;
+          left: -100%;
+          width: 100%;
+          height: 2px;
+          background: linear-gradient(90deg, transparent, #e90d77);
+          animation: btn-anim1 1s linear infinite;
+        }
+        
+        .register__box form .forget__link {
+          color: white;
+          text-decoration: none;
+        }
+        
+        .register__box form .forget__link:hover {
+          color: #e90d77;
+        }
+        
+        .register__box form .links {
+          color: white;
+          text-decoration: none;
+          margin-left: 5px;
+          padding: 10px;
+          letter-spacing: 2px;          
+        }
+        
+        .register__box form .links:hover {
+          background: #e90d77;
+          color: #fff;
+          border-radius: 5px;
+          box-shadow: 0 0 5px #e90d77, 0 0 25px #e90d77, 0 0 50px #e90d77,
+            0 0 100px #e90d77;
+        }
+
+        .errorMessage {
+            font-weight: bold;
+            background-color: yellow;
+            color: red;
+        }        
+        
+        @keyframes xbtn-anim1 {
+          0% {
+            left: -100%;
+          }
+          50%,
+          100% {
+            left: 100%;
+          }
+        }
+        
+        .register__box button span:nth-child(2) {
+          top: -100%;
+          right: 0;
+          width: 2px;
+          height: 100%;
+          background: linear-gradient(180deg, transparent, #e90d77);
+          animation: btn-anim2 1s linear infinite;
+          animation-delay: 0.25s;
+        }
+        
+        @keyframes xbtn-anim2 {
+          0% {
+            top: -100%;
+          }
+          50%,
+          100% {
+            top: 100%;
+          }
+        }
+        
+        .register__box button span:nth-child(3) {
+          bottom: 0;
+          right: -100%;
+          width: 100%;
+          height: 2px;
+          background: linear-gradient(270deg, transparent, #e90d77);
+          animation: btn-anim3 1s linear infinite;
+          animation-delay: 0.5s;
+        }
+        
+        @keyframes xbtn-anim3 {
+          0% {
+            right: -100%;
+          }
+          50%,
+          100% {
+            right: 100%;
+          }
+        }
+        
+        .register__box a span:nth-child(4) {
+          bottom: -100%;
+          left: 0;
+          width: 2px;
+          height: 100%;
+          background: linear-gradient(360deg, transparent, #e90d77);
+          animation: btn-anim4 1s linear infinite;
+          animation-delay: 0.75s;
+        }
+        
+        @keyframes xbtn-anim4 {
+          0% {
+            bottom: -100%;
+          }
+          50%,
+          100% {
+            bottom: 100%;
+          }
+        }
+        </style>    
+</head>
+<body>    
+    <script>
+        $(document).ready(function() {
+            // alert("jQuery works");
+            $('input[name=email]').on('paste blur change input', function() {
+                var email = $('input[name=email]').val();
+                $("#emailTaken").load("./isemailtaken/" + email);
+            });
+
+            $(document).ajaxError(function(event, jqxhr, settings, thrownError) {
+                console.log("Ajax error occured on " + settings.url);
+            });
+
+        });
+    </script>
+
+    <div>
+        <h1 class="title">Explore Online Fast-Dating</h1>            
+    </div>     
+    <div class="register__box">
+        <h2>Register</h2>
+      {% if errorList %}
+          <ul class="errorMessage">
+          {% for error in errorList %}
+              <li>{{error}}</li>
+          {% endfor %}
+          </ul>
+      {% endif %}
+
+        <form @submit.prevent="onSubmit" method="post" enctype="multipart/form-data">
+          <div class="user__box">
+            <input type="text" required minlength="5" name="name" value="{{ v.name }}"/>
+            <label>Fullname</label>
+          </div>
+    
+          <span class="errorMessage" id="emailTaken"></span><br>
+          
+          <div class="user__box">
+            <input type="email" required minlength="10" name="email" value="{{ v.email }}"/>
+            <label>Email</label>
+          </div>
+    
+          <div class="user__box">
+            <input type="password" minlength="6" required name="pass1" />
+            <label>Password</label>
+          </div>   
+
+          <div class="user__box">
+            <input type="password" minlength="6" required name="pass2"/>
+            <label>Confirm Password</label>
+          </div> 
+
+          <button type="submit">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <div>Register</div>
+          </button>
+          <span><a href="./newlogin" class="links">LOGIN</a></span>
+        </form>
+      </div>
+        
+</body>
+</html>

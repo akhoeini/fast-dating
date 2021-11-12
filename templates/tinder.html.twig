@@ -4,44 +4,26 @@
 <script type="text/javascript" src="./js/jquery.jTinder.js"></script>   
 
 <div class="wrap">
-    <div id="tinderslide">
-        <ul>
-            <li class="pane1">
-                <div class="img" style='background: url("./img/pane/pane1.png") no-repeat scroll center center;background-size: cover;'></div>
-                <div>Name</div>
-                <div class="like"></div>
-                <div class="dislike"></div>
-            </li>
-            <li class="pane2">
-                <div class="img" style='background: url("./img/pane/pane2.png") no-repeat scroll center center;background-size: cover;'></div>
-                <div>Name</div>
-                <div class="like"></div>
-                <div class="dislike"></div>
-            </li>
-            <li class="pane3">
-                <div class="img" style='background: url("./img/pane/pane3.png") no-repeat scroll center center;background-size: cover;'></div>
-                <div>Name</div>
-                <div class="like"></div>
-                <div class="dislike"></div>
-            </li>
-            <li class="pane4">
-                <div class="img" style='background: url("./img/pane/pane4.png") no-repeat scroll center center;background-size: cover;'></div>
-                <div>Name</div>
-                <div class="like"></div>
-                <div class="dislike"></div>
-            </li>
-            <li class="pane5">
-                <div class="img" style='background: url("./img/pane/pane5.png") no-repeat scroll center center;background-size: cover;'></div>
-                <div>Name</div>
-                <div class="like"></div>
-                <div class="dislike"></div>
-            </li>
-        </ul>      
-    </div>
-    <div class="actions">
-        <a href="#" class="dislike"><i></i></a>
-        <a href="#" class="like"><i></i></a>
-    </div>    
+    {% if items|length > 0 %}
+        <div id="tinderslide">
+            <ul>
+            {% for item in items %}
+                <li id="pane{{item.index}}", class="pane{{item.index}}" data-value={{item.id}}>
+                    <div class="img" style='background: url(./{{ item.photo }}) no-repeat scroll center center;background-size: cover;'></div>
+                    <div>{{ item.userName }}</div>
+                    <div class="like"></div>
+                    <div class="dislike"></div>
+                </li>
+            {% endfor %}
+            </ul>      
+        </div>
+        <div class="actions">
+            <a href="#" class="dislike"><i></i></a>
+            <a href="#" class="like"><i></i></a>
+        </div>    
+    {% else %}
+        <p><h1>No Recommendation Available Now</h1></p>
+    {% endif %}    
 </div>
 
 <div id="status">
@@ -51,13 +33,45 @@
 <script>
     $("#tinderslide").jTinder({
         onDislike: function (item) {
+            //send message to server            
+            console.log("onDislike", "#pane"+item.index(), document.getElementById("pane"+item.index()).getAttribute("data-value"));
+            $.ajax({     
+                url: './swipe',
+                type: "post",          
+                dataType: "json",             
+                data: JSON.stringify({
+                    id: document.getElementById("pane"+item.index()).getAttribute("data-value"),
+                    operation: "pass"
+                }),
+                success: function(data){
+                    console.log("recv onDislike", data);
+                } 
+            }); 
+
             if(item.index() == 0){
-                $("#content").load("./templates/tinder.html.twig");
+                var app = parent.datingApp;
+                app.showRecommendation();
             }                
         },
         onLike: function (item) {
+            //send message to server
+            console.log("onLike", "#pane"+item.index(), document.getElementById("pane"+item.index()).getAttribute("data-value"));
+            $.ajax({     
+                url: './swipe',
+                type: "post",          
+                dataType: "json",             
+                data: JSON.stringify({
+                    id: document.getElementById("pane"+item.index()).getAttribute("data-value"),
+                    operation: "like"
+                }),
+                success: function(data){
+                    console.log("recv onLike", data);
+                } 
+            });  
+
             if(item.index() == 0){
-                $("#content").load("./templates/tinder.html.twig");
+                var app = parent.datingApp;
+                app.showRecommendation();
             }
         },
         animationRevertSpeed: 200,
