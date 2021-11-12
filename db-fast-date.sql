@@ -188,6 +188,7 @@ CREATE TABLE `users` (
   `role` enum('admin','user') DEFAULT 'user',
   `firstName` varchar(100),
   `birthDate` datetime DEFAULT NULL,
+  `location` varchar(100),
   `genderId` int(11) DEFAULT NULL,
   `bio` varchar(500) DEFAULT NULL,
   `password` varchar(255) NOT NULL,
