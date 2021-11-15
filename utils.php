@@ -34,11 +34,13 @@ function verifyUploadedPhoto($photo, &$fileName) {
 }
 
 function debug_to_console($data) {
+    /*
     $output = $data;
     if (is_array($output))
         $output = json_encode($output);
 
     echo "<script>console.log('Debug Objects: " . $output . "' );</script>";
+    */
 }
 
 function check_user_session(&$response){    

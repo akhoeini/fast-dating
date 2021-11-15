@@ -34,7 +34,7 @@
     $("#tinderslide").jTinder({
         onDislike: function (item) {
             //send message to server            
-            console.log("onDislike", "#pane"+item.index(), document.getElementById("pane"+item.index()).getAttribute("data-value"));
+            //console.log("onDislike", "#pane"+item.index(), document.getElementById("pane"+item.index()).getAttribute("data-value"));
             $.ajax({     
                 url: '/swipe',
                 type: "post",          
@@ -55,7 +55,7 @@
         },
         onLike: function (item) {
             //send message to server
-            console.log("onLike", "#pane"+item.index(), document.getElementById("pane"+item.index()).getAttribute("data-value"));
+            //console.log("onLike", "#pane"+item.index(), document.getElementById("pane"+item.index()).getAttribute("data-value"));
             $.ajax({     
                 url: '/swipe',
                 type: "post",          
