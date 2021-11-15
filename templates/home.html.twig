@@ -187,15 +187,17 @@ footer {
                 <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                 <span class="fa fa-commenting mr-3"></span> Chat</a>
                 <ul class="collapse list-unstyled" id="pageSubmenu">
-                    <li>
-                        <a onclick="showChatRoom(1)">Chat Room - General</a>
-                    </li>
-                    <li>
-                        <a onclick="showChatRoom(2)">Chat Room - Homework</a>
-                    </li>
-                    <li>
-                        <a onclick="showChatRoom(3)">Chat Room - Off-topic</a>
-                    </li>
+                    {% if chatRoomList|length > 0 %}
+                        {% for room in chatRoomList %}
+                            <li>
+                                <a onclick="showChatRoom({{ room.id }})">Chat Room - {{room.name}}</a>
+                            </li>
+                        {% endfor %}
+                    {% else %}
+                        <li>
+                            <a href="#">No Available Chatroom</a>
+                        </li>                        
+                    {% endif %}                
                 </ul>
 	          </li>                
             </li>
