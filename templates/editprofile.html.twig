@@ -55,11 +55,11 @@
 					<fieldset>
 						<legend>I'm looking for:</label>
 						<div>
-							<input type="checkbox" id="men" name="genderLF" value="1">
+							<input type="checkbox" id="men" name="genderLF" value="1" {{ u.userLookingForId = 2 ? '' : 'checked' }}>
 							<label class="checkbox" for="men">Men</label>
 						</div>
 						<div>
-							<input type="checkbox" id="music" name="genderLF" value="2">
+							<input type="checkbox" id="music" name="genderLF" value="2" {{ u.userLookingForId = 1 ? '' : 'checked' }}>
 							<label class="checkbox" for="Women">Women</label>
 						</div>
 					</fieldset>
