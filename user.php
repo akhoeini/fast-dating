@@ -177,3 +177,28 @@ $app->get('/edit-profile', function ($request, $response, $args) {
     }
 });
 
+$app->post('/edit-profile', function ($request, $response) {
+    if ($_SESSION['user']['id']) {
+        $userId = $_SESSION['user']['id'];
+    } else {
+        $response = $response->withStatus(302);
+        return $response->withHeader('Location', '/login');
+    };
+    $firstName = $request->getParam('firstName');
+    $location = $request->getParam('location');
+    $username = $request->getParam('username');
+    $email = $request->getParam('email');
+    $gender = $request->getParam('gender');
+    $genderLFm = $request->getParam('genderLFm');
+    $genderLFf = $request->getParam('genderLFf');
+    $genderLF = 3;
+    if (!$genderLFm) {
+        $genderLF = 2;
+    }
+    if (!$genderLFf) {
+        $genderLF = 1;
+    }
+    $bio = $request->getParam('bio');
+
+    
+});
