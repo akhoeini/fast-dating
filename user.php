@@ -16,7 +16,7 @@ $app->get('/profile/{uId:[0-9]+}', function ($request, $response, $args) {
 
     $userInfo = DB::queryFirstRow("SELECT * FROM users WHERE id=%i", $args['uId']);
     $userPhotos = DB::query("SELECT photo.name, photo.description, photo.url FROM albums, photo WHERE albums.ownerId=%i AND albums.id=photo.albumId", $args['uId']);
-    $userInterests = DB::queryFirstColumn("SELECT interests.name FROM userInterest, interests WHERE userInterest.userId=%i AND userInterest.interestId=interests.id", $args['uId']);
+    $userInterests = DB::queryFirstColumn("SELECT interests.name FROM userinterest, interests WHERE userinterest.userId=%i AND userinterest.interestId=interests.id", $args['uId']);
     if (!$userInfo) {
         throw new \Slim\Exception\NotFoundException($request, $response);
     } else {
@@ -35,7 +35,7 @@ $app->get('/edit-profile', function ($request, $response, $args) {
     };
     $userInfo = DB::queryFirstRow("SELECT * FROM users WHERE id=%i", $userId);
     $userPhotos = DB::query("SELECT photo.name, photo.description, photo.url FROM albums, photo WHERE albums.ownerId=%i AND albums.id=photo.albumId", $userId);
-    $userInterests = DB::queryFirstColumn("SELECT interests.name FROM userInterest, interests WHERE userInterest.userId=%i AND userInterest.interestId=interests.id", $userId);
+    $userInterests = DB::queryFirstColumn("SELECT interests.name FROM userinterest, interests WHERE userinterest.userId=%i AND userinterest.interestId=interests.id", $userId);
     if (!$userInfo) {
         throw new \Slim\Exception\NotFoundException($request, $response);
     } else {
@@ -43,3 +43,28 @@ $app->get('/edit-profile', function ($request, $response, $args) {
     }
 });
 
+$app->post('/edit-profile', function ($request, $response) {
+    if ($_SESSION['user']['id']) {
+        $userId = $_SESSION['user']['id'];
+    } else {
+        $response = $response->withStatus(302);
+        return $response->withHeader('Location', '/login');
+    };
+    $firstName = $request->getParam('firstName');
+    $location = $request->getParam('location');
+    $username = $request->getParam('username');
+    $email = $request->getParam('email');
+    $gender = $request->getParam('gender');
+    $genderLFm = $request->getParam('genderLFm');
+    $genderLFf = $request->getParam('genderLFf');
+    $genderLF = 3;
+    if (!$genderLFm) {
+        $genderLF = 2;
+    }
+    if (!$genderLFf) {
+        $genderLF = 1;
+    }
+    $bio = $request->getParam('bio');
+
+    
+});

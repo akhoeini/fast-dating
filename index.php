@@ -21,8 +21,21 @@ $app->get('/', function ($request, $response, $args) {
 
     //debug_to_console($userName);
     //debug_to_console($userId);
+    $data = ['nameVal' => $userName, 'idVal' => $userId];
+    $data['photoVal'] = get_swipe_photo($userId);
 
-    return $this->view->render($response, 'home.html.twig', ['nameVal' => $userName, 'idVal' => $userId] );
+    //get the chat room name
+    $data['chatRoomList'] = [];
+
+    $chatroomList = DB::query("SELECT * FROM room");
+    if(!$chatroomList) {        
+        return $this->view->render($response, 'home.html.twig', $data);
+    }    
+
+    $data['chatRoomList'] = $chatroomList;
+
+    return $this->view->render($response, 'home.html.twig', $data );
+
 });
 
 

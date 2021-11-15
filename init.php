@@ -6,7 +6,9 @@ require_once 'vendor/autoload.php';
 
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
+
 use Twig\Node\Expression\NameExpression;
+
 
 // create a log channel
 $log = new Logger('main');
@@ -89,4 +91,6 @@ $container['view'] = function ($c) {
     $view->addExtension(new \Slim\Views\TwigExtension($router, $uri));
     return $view;
 };
+
+$container['upload_directory'] = __DIR__ . '/uploads/swipe_photos/';
 
