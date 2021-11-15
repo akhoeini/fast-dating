@@ -34,12 +34,30 @@ function verifyUploadedPhoto($photo, &$fileName) {
 }
 
 function debug_to_console($data) {
+    /*
     $output = $data;
     if (is_array($output))
         $output = json_encode($output);
 
     echo "<script>console.log('Debug Objects: " . $output . "' );</script>";
+    */
 }
 
+function check_user_session(&$response){    
+    if (!isset($_SESSION['user'])) { // refuse if user not logged in
+        $response = $response->withStatus(301);
+        $res = ["code" => 1, "error" => "session ends"];    
+        $response->getBody()->write(json_encode($res));
+        return false;
+    }
+    return true;
+}
 
-
+function get_swipe_photo($userId) {
+    $ret = "#";
+    $swipePhoto = DB::queryFirstRow("SELECT * FROM swipe_photos WHERE user_id=%d", $userId);
+    if($swipePhoto) {
+        $ret = "/uploads/swipe_photos/" . $swipePhoto["image_name"] . "?v=" . time();
+    } 
+    return $ret;
+}

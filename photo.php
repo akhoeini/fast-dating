@@ -6,8 +6,6 @@ require_once 'init.php';
 
 use Slim\Http\UploadedFile;
 
-$container['upload_directory'] = __DIR__ . '/uploads/swipe_photos';
-
 function moveUploadedFile($directory, UploadedFile $uploadedFile)
 {
     $extension = pathinfo($uploadedFile->getClientFilename(), PATHINFO_EXTENSION);
@@ -21,10 +19,27 @@ function moveUploadedFile($directory, UploadedFile $uploadedFile)
 
 
 $app->get('/photo1', function ($request, $response, $args) {
-    return $this->view->render($response, 'photo.html.twig');
+    if(!check_user_session($response))
+        return $response;
+
+    $id = $_SESSION['user']['id'];
+    $data = [ 'photo' => '#' ];
+    $swipePhoto = DB::queryFirstRow("SELECT * FROM swipe_photos WHERE user_id=%d", $id);
+    if($swipePhoto) {
+        $filename = $this->get('upload_directory') . $swipePhoto["image_name"];    
+        if(file_exists($filename)){
+            $data = [ 'photo' => "/uploads/swipe_photos/" . $swipePhoto["image_name"] . "?v=" . time() ];    
+        }            
+    }        
+
+    //debug_to_console("uploads/swipe_photos/" . $swipePhoto["image_name"]);
+        
+    return $this->view->render($response, 'photo.html.twig', $data);
 });
 
 $app->post('/photo1', function ($request, $response, $args) {
+    if(!check_user_session($response))
+        return $response;
 
     $errorList = array();
     // verify image
@@ -64,4 +79,51 @@ $app->post('/photo1', function ($request, $response, $args) {
 
     array_push($errorList, "Photo updated successfully");
     return $this->view->render($response, 'photo.html.twig', [ 'errorList' => $errorList ]);
+});
+
+$app->post('/photo2', function ($request, $response, $args) {
+    if(!check_user_session($response))
+        return $response;
+
+    $id = $_SESSION['user']['id'];        
+    $json = $request->getBody();
+
+    $item = json_decode($json, TRUE);
+
+    $img = $item['data'];
+    global $log;
+    $log->debug(json_encode($img));
+
+    $image_info = getimagesize($img);
+
+    $extension = (isset($image_info["mime"]) ? explode('/', $image_info["mime"] )[1]: "");
+
+    //$log->debug(json_encode($$extension));
+
+    if($extension == "png")
+        $img = str_replace('data:image/png;base64,', '', $img);    
+    else if($extension == "jpeg")
+        $img = str_replace('data:image/jpeg;base64,', '', $img);
+    else {
+        $res = ["code" => 1, "error" => $extension];    
+        $response->getBody()->write(json_encode($res));
+        return $response;
+    }        
+
+	$img = str_replace(' ', '+', $img);
+	$data = base64_decode($img);
+	$filename = $this->get('upload_directory') . $id . ".". $extension;
+	$success = file_put_contents($filename, $data);
+
+    $swipePhoto = DB::queryFirstRow("SELECT * FROM swipe_photos WHERE user_id=%d", $id);
+    if(!$swipePhoto)      
+        DB::insert('swipe_photos', ['user_id' => $_SESSION['user']['id'], 'image_name' => $id . "." . $extension]);                  
+    else
+        DB::update('swipe_photos', ['user_id' => $_SESSION['user']['id'], 'image_name' => $id . "." . $extension], 
+                    "user_id=%d", $id);
+
+    //return $this->view->render($response, 'photo.html.twig', [ 'photo' => '/uploads/swipe_photos/' . $id . "." . $extension ]);
+    $res = ["code" => 0, "error" => "", "data" => '/uploads/swipe_photos/' . $id . "." . $extension . "?v=" . time() ];    
+    $response->getBody()->write(json_encode($res));
+    return $response;    
 });

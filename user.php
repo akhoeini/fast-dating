@@ -150,7 +150,7 @@ $app->get('/profile/{uId:[0-9]+}', function ($request, $response, $args) {
 
     $userInfo = DB::queryFirstRow("SELECT * FROM users WHERE id=%i", $args['uId']);
     $userPhotos = DB::query("SELECT photo.name, photo.description, photo.url FROM albums, photo WHERE albums.ownerId=%i AND albums.id=photo.albumId", $args['uId']);
-    $userInterests = DB::queryFirstColumn("SELECT interests.name FROM userInterest, interests WHERE userInterest.userId=%i AND userInterest.interestId=interests.id", $args['uId']);
+    $userInterests = DB::queryFirstColumn("SELECT interests.name FROM userinterest, interests WHERE userinterest.userId=%i AND userinterest.interestId=interests.id", $args['uId']);
     if (!$userInfo) {
         throw new \Slim\Exception\NotFoundException($request, $response);
     } else {
@@ -169,7 +169,7 @@ $app->get('/edit-profile', function ($request, $response, $args) {
     };
     $userInfo = DB::queryFirstRow("SELECT * FROM users WHERE id=%i", $userId);
     $userPhotos = DB::query("SELECT photo.name, photo.description, photo.url FROM albums, photo WHERE albums.ownerId=%i AND albums.id=photo.albumId", $userId);
-    $userInterests = DB::queryFirstColumn("SELECT interests.name FROM userInterest, interests WHERE userInterest.userId=%i AND userInterest.interestId=interests.id", $userId);
+    $userInterests = DB::queryFirstColumn("SELECT interests.name FROM userinterest, interests WHERE userinterest.userId=%i AND userinterest.interestId=interests.id", $userId);
     if (!$userInfo) {
         throw new \Slim\Exception\NotFoundException($request, $response);
     } else {

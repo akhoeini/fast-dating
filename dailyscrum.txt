@@ -165,3 +165,39 @@ Shengguang:
    1: exam
    2: work on chat feature
    3: no
+
+Day 11 (11/11/2021):
+Shengguang:
+   1: worked on matches logic
+   2: still work on chat features
+   3: no
+
+Day 12 (11/12/2021):
+Shengguang:
+   1: work on chat features
+   2: sovled nodejs cross-domain
+      chat client UI
+   3: no
+
+Day 13 (11/13/2021):
+Shengguang:
+   1: client chat UI & logic
+   2: modify the home/main page
+      work on likes UI & logic, 
+   3: no
+
+Day 13 (11/13/2021):
+Shengguang:
+   1: worked on home/main page ,likes page
+   2: work on chat server
+      work on messages
+      work on swipe photo upload
+   3: no
+
+Day 14 (11/14/2021):
+Shengguang:
+   1: swipe photo, chat server, message page
+   2: work on about us page
+	  work on message delete
+	  work on signout popup
+   3: no

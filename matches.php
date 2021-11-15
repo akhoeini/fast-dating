@@ -19,40 +19,67 @@ class MatchUser
     public $location;
 }
 
+class LikedUser
+{
+    public $id;
+    public $photo;
+    public $userName;
+    public $location;
+}
+
+class MessageItem
+{
+    public $id;
+    public $photo;
+    public $userName;
+    public $message;
+}
+
 $app->get('/recommend', function ($request, $response, $args) {    
-    $usersList = DB::query("SELECT * FROM users");       
+    $usersList = DB::query("SELECT * FROM users ORDER BY RAND() LIMIT 10");
 
     $data["items"] = array();
     $index = 0;
     $i = 0;
+    $old_user = array();
     foreach ($usersList as $user) {
         if($user["id"] == $_SESSION['user']['id'])
+            continue;
+
+        if(array_search($user["id"], $old_user))
+            continue;
+        
+        $matchUserList = DB::query("SELECT * FROM matches WHERE user_id=%d and matched_user_id=%d", $_SESSION['user']['id'], $user["id"]);
+        if($matchUserList)
+            continue;
+        
+        //$likeUserList = DB::query("SELECT * FROM user_likes WHERE user_id=%d and liked_user_id=%d and operation='like'", $_SESSION['user']['id'], $user["id"]);    
+        $likeUserList = DB::query("SELECT * FROM user_likes WHERE user_id=%d and liked_user_id=%d", $_SESSION['user']['id'], $user["id"]);    
+        if($likeUserList)
             continue;
 
         $swipePhoto = DB::queryFirstRow("SELECT * FROM swipe_photos WHERE user_id=%d", $user["id"]);
         if(!$swipePhoto)
             continue;
+			
+        $filename = $this->get('upload_directory') . $swipePhoto["image_name"];
+        if(!file_exists($filename))
+            continue;         
 
-        $matchUserList = DB::query("SELECT * FROM matches WHERE user_id=%d and matched_user_id=%d", $_SESSION['user']['id'], $user["id"]);
-        $likeUserList = DB::query("SELECT * FROM user_likes WHERE user_id=%d and liked_user_id=%d", $_SESSION['user']['id'], $user["id"]);    
+        $old_user []= $user["id"];
 
         debug_to_console($matchUserList);
         debug_to_console($likeUserList);
 
-        if(!$matchUserList && !$likeUserList){            
+        $userItem = new SwipeUser();        
+        $userItem->index = $index++;
+        $userItem->id = $user["id"];
+        $userItem->photo = "uploads/swipe_photos/" . $swipePhoto["image_name"];;
+        $userItem->userName = $user['userName'];
+        $data["items"][] = $userItem;
 
-            debug_to_console($swipePhoto);
-
-            $userItem = new SwipeUser();        
-            $userItem->index = $index++;
-            $userItem->id = $user["id"];
-            $userItem->photo = "uploads/swipe_photos/" . $swipePhoto["image_name"];
-            $userItem->userName = $user['userName'];
-            $data["items"][] = $userItem;
-
-            if($i++ >= 5) {
-                break;
-            }
+        if($i++ >= 5) {
+            break;
         }        
     }    
 
@@ -60,28 +87,32 @@ $app->get('/recommend', function ($request, $response, $args) {
 });
 
 $app->get('/matches', function ($request, $response, $args) {
-    if (!isset($_SESSION['user'])) { // refuse if user not logged in
-        $response = $response->withStatus(201);
-        return $this->view->render($response, 'newlogin.html.twig');
-    }
+    if(!check_user_session($response))
+        return $response;
 
     $data["items"] = array();
-    $data['nameVal'] = "123";//$_SESSION['user']['userName'];
-    $data['idVal'] = 1;//$_SESSION['user']['id'];
+    $data['nameVal'] = $_SESSION['user']['userName'];
+    $data['idVal'] = $_SESSION['user']['id'];
 
-    $matchUserList = DB::query("SELECT * FROM matches WHERE user_id=%d", $_SESSION['user']['id']);
+    $id = $_SESSION['user']['id'];
+    $matchUserList = DB::query("SELECT * FROM matches WHERE user_id=%d", $id);
     if(!$matchUserList)
     {
         return $this->view->render($response, 'matches.html.twig', $data);
     }
 
-    for ($i = 0; $i < 4; $i++) {
-        $id = rand(1, 1000);
-        $photo = rand(1, 100);
+    for ($i = 0; $i < count($matchUserList); $i++) {        
+        $m_id = $matchUserList[$i]['matched_user_id'];
+        $user = DB::queryFirstRow("SELECT * FROM users WHERE id=%d", $m_id);
+
         $userItem = new MatchUser();
-        $userItem->id = $i;
-        $userItem->photo = $photo;
-        $userItem->userName = 'sedan' . $i;
+        $userItem->id = $m_id;
+
+        $photo = get_swipe_photo($m_id);
+        $userItem->photo = ($photo == "#") 
+                           ? "/images/face.jpg" 
+                           : $photo;
+        $userItem->userName = $user['userName'];
         $userItem->location = 'Montreal';
         $data["items"][] = $userItem;
     }
@@ -89,7 +120,10 @@ $app->get('/matches', function ($request, $response, $args) {
     return $this->view->render($response, 'matches.html.twig', $data);
 });
 
-$app->post('/swipe', function ($request, $response, $args) {    
+$app->post('/swipe', function ($request, $response, $args) {
+    if(!check_user_session($response))
+        return $response;
+
     global $log;
     $json = $request->getBody();
     $item = json_decode($json, TRUE);
@@ -97,26 +131,56 @@ $app->post('/swipe', function ($request, $response, $args) {
     $data = [
         "user_id" => $_SESSION['user']['id'],
         "liked_user_id" => $item['id'],
-    ];
+    ];    
 
     if($item["operation"] == "pass") {
         $data ["operation"] = "pass";
-
     }else if($item["operation"] == "like") {
         $data ["operation"] = "like";
-    }else{
+    } else {
         $response = $response->withStatus(404);
         $res = ["code" => 1, "error" => "invalid operation", "data" => $json];
         $response->getBody()->write(json_encode($res));
         return $response;    
     }
 
+    $likeUserList = DB::query("SELECT * FROM user_likes WHERE user_id=%d and liked_user_id=%d and operation='like'", $item['id'], $_SESSION['user']['id']);    
+    $matchUserList = DB::query("SELECT * FROM matches WHERE user_id=%d and matched_user_id=%d", $_SESSION['user']['id'], $item["id"]);    
+
+    $match_flag = 0;
+    if($likeUserList && !$matchUserList) { //matches!!
+        $match_flag = 1;
+
+        $match_data = [
+            "user_id" => $_SESSION['user']['id'],
+            "matched_user_id" => $item['id'],
+        ];
+        DB::insert('matches', $match_data);
+
+        $match_data1 = [
+            "user_id" => $item['id'],
+            "matched_user_id" => $_SESSION['user']['id'],
+        ];
+        DB::insert('matches', $match_data1);
+
+        //need to save message to matched_user_id;
+        $message = [];
+        $message['mtype'] = 0;
+        $message['from_id'] = 0;
+        $message['to_id'] = $item['id'];
+        $message['msg'] = "<strong>Congratulations!</strong> You have a new matches.";    
+        DB::insert('messages', $message);        
+    }
+
     DB::insert('user_likes', $data);
     $insertId = DB::insertId();
     $log->debug("Record added id=" . $insertId);
     $response = $response->withStatus(201);
-    $res = ["code" => 0, "error" => "", "data" => $insertId];
-    $response->getBody()->write(json_encode($res));     
+    $res = ["code" => 0, "error" => "", "data" => $match_flag];
+    $response->getBody()->write(json_encode($res));
+
+
+    return $response;
 });
 
 $app->get('/newlogin', function ($request, $response, $args) {
@@ -154,8 +218,11 @@ $app->post('/newlogin', function ($request, $response, $args) use ($log) {
         
         $userName = $_SESSION['user']['userName'];
         $userId = $_SESSION['user']['id'];
+
+        $data = ['nameVal' => $userName, 'idVal' => $userId];
+        $data['photoVal'] = get_swipe_photo($userId);
     
-        return $this->view->render($response, 'home.html.twig', ['nameVal' => $userName, 'idVal' => $userId] );
+        return $this->view->render($response, 'home.html.twig', $data );
     }
 });
 
@@ -203,7 +270,7 @@ $app->post('/register', function ($request, $response, $args) {
         $pwdHashed = password_hash($pwdPeppered, PASSWORD_DEFAULT); // PASSWORD_ARGON2ID);
         DB::insert('users', ['userName' => $name, 'email' => $email, 'password' => $pass1]);
 
-        return $this->view->render($response, 'newlogin.html.twig');
+        return $this->view->render($response, 'newlogin.html.twig', ['email' => $email ]);
     }
 });
 
@@ -221,7 +288,9 @@ $app->get('/isemailtaken/[{email}]', function ($request, $response, $args) {
 $app->get('/logout', function ($request, $response, $args) use ($log) {
     $log->debug(sprintf("Logout successful for uid=%d, from %s", @$_SESSION['user']['id'], $_SERVER['REMOTE_ADDR']));
     unset($_SESSION['user']);
-    return $this->view->render($response, 'newlogin.html.twig');
+    //return $this->view->render($response, 'newlogin.html.twig');
+    //$response = $response->withStatus(201);
+    return $response->withHeader('Location', '/');
 });
 
 function verifyPasswordQuailty($pass1, $pass2) {
@@ -285,11 +354,215 @@ function verifyUploadedPhotoMime($photo, &$mime = null) {
 }
 
 $app->get('/likes', function ($request, $response, $args) {
+    $data["items"] = array();
+    $data['nameVal'] = $_SESSION['user']['userName'];
+    $data['idVal'] = $_SESSION['user']['id'];
+    $data['likeFlag'] = 0;
+
     $id = $_SESSION['user']['id'];
-    $swipePhoto = DB::query("SELECT * FROM user_likes WHERE user_id=%d", $id);   
-    $res = ["code" => 1, "data" => $swipePhoto];
-    if(!$swipePhoto) {
-        $res = "No Likes";
+    $userList = DB::query("SELECT * FROM user_likes WHERE liked_user_id=%d and operation='like'", $id);   
+    if(!$userList) {
+        return $this->view->render($response, 'likes.html.twig', $data);
     }
-    return $response->write(json_encode($res));
+    
+    for ($i = 0; $i < count($userList); $i++) {        
+        $m_id = $userList[$i]['user_id'];
+
+        $matchUserList = DB::query("SELECT * FROM matches WHERE user_id=%d and matched_user_id=%d", $id, $m_id);
+        if($matchUserList)
+            continue;
+
+        $user = DB::queryFirstRow("SELECT userName FROM users WHERE id=%d", $m_id);
+
+        $userItem = new LikedUser();
+        $userItem->id = $m_id;
+        
+        $photo = get_swipe_photo($m_id);
+        $userItem->photo = ($photo == "#") 
+                           ? "/images/face.jpg" 
+                           : $photo;
+        $userItem->userName = $user['userName'];
+        $userItem->location = 'Montreal';
+        $data["items"][] = $userItem;
+    }
+
+    return $this->view->render($response, 'likes.html.twig', $data);    
+});
+
+$app->get('/likes1', function ($request, $response, $args) {
+    $data["items"] = array();
+    $data['nameVal'] = $_SESSION['user']['userName'];
+    $data['idVal'] = $_SESSION['user']['id'];
+    $data['likeFlag'] = 1;
+
+    $id = $_SESSION['user']['id'];
+    $userList = DB::query("SELECT * FROM user_likes WHERE user_id=%d and operation='like'", $id);   
+    if(!$userList) {
+        return $this->view->render($response, 'likes.html.twig', $data);
+    }
+    
+    for ($i = 0; $i < count($userList); $i++) {        
+        $m_id = $userList[$i]['liked_user_id'];
+
+        $matchUserList = DB::query("SELECT * FROM matches WHERE user_id=%d and matched_user_id=%d", $id, $m_id);
+        if($matchUserList)
+            continue;
+
+        $user = DB::queryFirstRow("SELECT userName FROM users WHERE id=%d", $m_id);
+
+        $userItem = new LikedUser();
+        $userItem->id = $m_id;
+        
+        $photo = get_swipe_photo($m_id);
+        $userItem->photo = ($photo == "#") 
+                           ? "/images/face.jpg" 
+                           : $photo;
+        $userItem->userName = $user['userName'];
+        $userItem->location = 'Montreal';
+        $data["items"][] = $userItem;
+    }
+
+    return $this->view->render($response, 'likes.html.twig', $data);    
+});
+
+
+$app->post('/tick', function ($request, $response, $args) {
+    if(!check_user_session($response))
+        return $response;
+
+    $id = $_SESSION['user']['id'];
+
+    //check if this user has message
+    $message = DB::queryFirstRow("SELECT * FROM messages where to_id=%d and recd=0", $id);
+    if(!$message) {
+        $res = ["flag" => 0, "data" => ""];
+        $response->getBody()->write(json_encode($res));    
+        return $response;
+    }
+
+    //debug_to_console(json_encode($message));
+    //update 
+    DB::update("messages", ['recd' => 1], "id=%d", $message['id']);    
+
+    $data = [
+             "mtype" => $message['mtype'], 
+             "from_id" => $message['from_id'], 
+             "to_id" => $message['to_id'], 
+             "msg" => $message['msg'],
+             "sent" => $message['sent']
+            ];
+    $res = ["flag" => 1, "data" => $data];
+    
+    if($res['flag'] == 1) {
+        //global $log;
+        //$log->info(json_encode($message, JSON_NUMERIC_CHECK));    
+    }
+
+    $response->getBody()->write(json_encode($res, JSON_NUMERIC_CHECK));
+
+    return $response;
+});        
+
+$app->get('/about', function ($request, $response, $args) {
+    return $this->view->render($response, 'about.html.twig');
+});
+
+$app->post('/message', function ($request, $response, $args) {
+    if(!check_user_session($response))
+        return $response;
+
+    $id = $_SESSION['user']['id'];
+
+    $json = $request->getBody();
+
+    global $log;
+    $log->info($json);
+    
+    $item = json_decode($json, TRUE);
+
+    $text = $item['msgText'];
+    $toId = $item['toId'];
+    debug_to_console($json);
+
+    //need to save message to matched_user_id;
+    $message = [];
+    $message['mtype'] = 1;
+    $message['from_id'] = $id;
+    $message['to_id'] = $toId;
+    $message['msg'] = $text;
+    DB::insert('messages', $message);
+
+    $res = ["flag" => 1];
+    $response->getBody()->write(json_encode($res));
+    
+    return $response;
+});
+
+$app->get('/message', function ($request, $response, $args) {
+    $data["items"] = array();
+    $data['nameVal'] = $_SESSION['user']['userName'];
+    $data['idVal'] = $_SESSION['user']['id'];
+
+    $id = $_SESSION['user']['id'];
+    $messageList = DB::query("SELECT * FROM messages WHERE to_id=%d and mtype=1", $id);   
+    if(!$messageList) {
+        return $this->view->render($response, 'messages.html.twig', $data);
+    }
+    
+    for ($i = 0; $i < count($messageList); $i++) {        
+        $m_id = $messageList[$i]['from_id'];
+
+        $user = DB::queryFirstRow("SELECT userName FROM users WHERE id=%d", $m_id);
+
+        $messageItem = new MessageItem();
+        $messageItem->id = $messageList[$i]['id'];
+        
+        $photo = get_swipe_photo($m_id);
+        $messageItem->photo = ($photo == "#") 
+                           ? "/images/face.jpg" 
+                           : $photo;
+        $messageItem->userName = $user['userName'];
+        $messageItem->message = $messageList[$i]['msg'];
+        $data["items"][] = $messageItem;
+
+        DB::update("messages", ['recd' => 1], "id=%d", $messageItem->id); 
+    }
+
+    return $this->view->render($response, 'messages.html.twig', $data);    
+});
+
+$app->post('/delmessage', function ($request, $response, $args) {
+    if(!check_user_session($response))
+        return $response;
+
+    $id = $_SESSION['user']['id'];
+
+    $json = $request->getBody();
+
+    global $log;
+    $log->info($json);
+    
+    $item = json_decode($json, TRUE);
+
+    $res = ["flag" => 0];
+
+    $msgId = $item['msgId'];
+    $message = DB::queryFirstRow("SELECT * FROM messages WHERE id=%d", $msgId);   
+    if(!$message) {
+        $res['error'] = "Invaid msg id " . $msgId;
+        $response->getBody()->write(json_encode($res));
+        return $response;
+    }
+    if($message['to_id'] != $id){
+        $res['error'] = "Invaid msg id or receiver";
+        $response->getBody()->write(json_encode($res));
+        return $response;
+    }    
+
+    DB::delete('messages', "id=%i", $msgId);
+
+    $res = ["flag" => 1, "msgId" => $msgId];
+    $response->getBody()->write(json_encode($res, JSON_NUMERIC_CHECK));
+    
+    return $response;    
 });

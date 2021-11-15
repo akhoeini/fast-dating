@@ -1,7 +1,7 @@
-<link rel="stylesheet" type="text/css" href="./css/jTinder.css">
-<script type="text/javascript" src="./js/jquery.min.js"></script>
-<script type="text/javascript" src="./js/jquery.transform2d.js"></script>
-<script type="text/javascript" src="./js/jquery.jTinder.js"></script>   
+<link rel="stylesheet" type="text/css" href="/css/swipe.css">
+<script type="text/javascript" src="/js/jquery.min.js"></script>
+<script type="text/javascript" src="/js/jquery.transform2d.js"></script>
+<script type="text/javascript" src="/js/swipe.js"></script>   
 
 <div class="wrap">
     {% if items|length > 0 %}
@@ -21,22 +21,22 @@
             <a href="#" class="dislike"><i></i></a>
             <a href="#" class="like"><i></i></a>
         </div>    
+        <div id="status">
+            <span style="color: rgb(200,20,20); width: 100%; left: 0;">Swipe Left or Right To Pass or Like</span>
+        </div>        
     {% else %}
         <p><h1>No Recommendation Available Now</h1></p>
     {% endif %}    
 </div>
 
-<div id="status">
-    <span></span>
-</div>
 
 <script>
     $("#tinderslide").jTinder({
         onDislike: function (item) {
             //send message to server            
-            console.log("onDislike", "#pane"+item.index(), document.getElementById("pane"+item.index()).getAttribute("data-value"));
+            //console.log("onDislike", "#pane"+item.index(), document.getElementById("pane"+item.index()).getAttribute("data-value"));
             $.ajax({     
-                url: './swipe',
+                url: '/swipe',
                 type: "post",          
                 dataType: "json",             
                 data: JSON.stringify({
@@ -44,7 +44,7 @@
                     operation: "pass"
                 }),
                 success: function(data){
-                    console.log("recv onDislike", data);
+                    //console.log("recv onDislike", data);
                 } 
             }); 
 
@@ -55,9 +55,9 @@
         },
         onLike: function (item) {
             //send message to server
-            console.log("onLike", "#pane"+item.index(), document.getElementById("pane"+item.index()).getAttribute("data-value"));
+            //console.log("onLike", "#pane"+item.index(), document.getElementById("pane"+item.index()).getAttribute("data-value"));
             $.ajax({     
-                url: './swipe',
+                url: '/swipe',
                 type: "post",          
                 dataType: "json",             
                 data: JSON.stringify({
@@ -65,7 +65,13 @@
                     operation: "like"
                 }),
                 success: function(data){
-                    console.log("recv onLike", data);
+                    //console.log("recv onLike", data);
+
+                    //var msg = JSON.parse(data);
+                    if(data.data == 1){
+                        var app = parent.datingApp;
+                        app.showAlertMessage("<strong>Congratulations!</strong> You have a new matches.", true);
+                    }
                 } 
             });  
 
