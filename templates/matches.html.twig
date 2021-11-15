@@ -1,6 +1,12 @@
-    <link rel="stylesheet" href="./css/bootstrap.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/popper.min.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.min.js"></script>    
     <style>
+body{
+    background-color: aliceblue;
+}
+
 .matches_container{
   width:100vh;
   height:100vh;
@@ -19,7 +25,6 @@
   opacity:0;
   padding:80px 100px;
   box-sizing:border-box;
-  transition: 0.5s;
   overflow-x: hidden;
 }
 
@@ -75,22 +80,14 @@ body.activeForm .overlay-form {
   width: 100%;
   height: 100%;
 }
-
-.message {
-  height: 25px;
-  width: 25px;
-  background-color: red;
-  border-radius: 50%;
-  display: inline-block;
-}
     </style>  
 
   <div class="matches_container">
       <div>
         {% if items|length > 0 %}      
-          <h2>My Matches</h2>
+          <h3>Your Matches</h3>
         {% else %}
-          <h2>No Matches</h2>
+          <h3>No Matches</h3>
         {% endif %}          
       </div>
       <table class="table table-bordered">
@@ -100,20 +97,19 @@ body.activeForm .overlay-form {
           <th>Name</th>
           <th>Location</th>
           <th style="width: 90px">Profile</th>
-          <th style="width: 90px">Chat</th>
+          <th style="width: 90px">Message</th>
         </tr>
         </thead>
         <tbody>
         {% if items|length > 0 %}
           {% for item in items %}
             <tr>
-              <td><img style="border-radius: 50%;" src="https://picsum.photos/id/{{item.photo}}/60/60/"/></td>              
+              <td><img style="border-radius: 50%;" src="{{item.photo}}" width="60px;" height="60px;"/></td>              
               <td>{{ item.userName }}</td>
               <td>{{ item.location }}</td>
               <td><a style="cursor:pointer;color:white;" onclick="showUserProfile({{item.id}});" class="btn btn-primary">View</a></td>
               <td>
-                <a style="cursor:pointer;color:white;" onclick="showUserChat('{{item.id}}');" class="btn btn-primary">Chat</a>
-                <div id="message{{item.id}}" class="message" style="display:none;"></div>
+                <a style="cursor:pointer;color:white;" onclick="sendMessage('{{item.id}}');" class="btn btn-primary">Send Message</a>
               </td>
             </tr>
           {% endfor %}
@@ -122,86 +118,87 @@ body.activeForm .overlay-form {
       </table>
     </div>
 
-      <div id="chat" class="overlay-form" style="margin-top:-40px;"></div>
-      <div id="profile" class="overlay-form" style="margin-top:-40px;"></div>
-      <a id="close-btn" class="close-btn" onclick="closeActiveFrom()" style="display:none;color:white;">&times;</a>         
+      <!-- Modal -->    
+      <div class="modal fade" id="changeCity" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title" id="myModalLabel">Enter your message</h4>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>              
+            </div>
+            <div class="modal-body">
+                <form class="form-inline"> 
+                  <input type="hidden" id="toId" name="toId" value="">
+                  <input type="text" class="flex-fill form-control mb-2 mr-sm-2" style="margin-left:200px;" id="msgText" name="msgText">                 
+                  <button type="submit" class="btn btn-primary mb-2" id="sendMsg">Send</button> 
+                </form>
+            </div>
+          </div>
+        </div>
+      </div>    
+
+    <div id="profile" class="overlay-form" style="margin-top:-40px;">
+          <iframe id="profile_content" width='100%' height='100%' style="background-color: aliceblue;"
+              frameborder='no' border='0' marginwidth='0' marginheight='0' style='padding-left:0px;'>
+          </iframe>      
+    </div>
+    <a id="close-btn" class="close-btn" onclick="closeActiveFrom()" style="display:none;color:white;">&times;</a>
 
     <script>
-         //var chatServerURL = "http://127.0.0.1:9000/chat.html"
-         var chatServerURL = "http://3.14.66.20:9000/chat.html";
-         var chatUserList = null;
-
          function closeActiveFrom() {
            document.body.classList.toggle('activeForm');
+
+           $("#profile").hide();
            $("#close-btn").hide();
-
-           if($("#chat").css("display") == 'none')
-              return;
-
-           var message = {id:"closeChat", data:""};
-           document.getElementById('child').contentWindow.postMessage(JSON.stringify(message), "*");
-            //"http://127.0.0.1:9000/chat.html")
          }
 
         $(document).ready(function() {
-           //window.datingApp = parent.datingApp;
-           //var userName = window.datingApp.userName;
-           //var userId = window.datingApp.userId;
-           
-           var userName = "{{nameVal}}"
-           var userId = {{idVal}}
-
-           var data = "<iframe id='child' src=" + chatServerURL + "?uid=" + userId + "&name=" + userName + "&room=111'" + 
-                       " width='100%' height='100%'" + 
-                       " frameborder='no' border='0' marginwidth='0' marginheight='0' style='padding-left:0px;' scrolling='no'></iframe> ";
-           $("#chat").html(data);
-
           $("#profile").hide();
-          $("#chat").hide();           
+          $("#close-btn").hide();          
+
+          $("#sendMsg").click(function(e){
+              e.preventDefault();
+                $.ajax
+                ({
+                  url: '/message',
+                  type: "post",          
+                  dataType: "json",             
+                  data: JSON.stringify({
+                      toId: $("#toId").val(),
+                      msgText: $("#msgText").val()
+                  }),                
+                  'success': function(data){ 
+                    console.log("msg", data);     
+                  }
+                });            
+          })
+
         })
 
-        function showUserChat(uid) {
-          if(chatUserList == null)
-            return;
-            
-           $("#profile").hide();
-           $("#chat").show();
-           $("#close-btn").show();
-           document.body.classList.toggle('activeForm');
-
-           var userId = "";
-          for (let user of chatUserList) {
-            console.log("check user", uid, user.name, user.uid, user.id);
-            if(uid == user.uid) {
-              userId = user.id;
-              break;
-            }
-          }
-          if(userId == "") 
-            return;
-
-          var message = {
-             id:"openChat", 
-             data: userId
-          };
-          document.getElementById('child').contentWindow.postMessage(JSON.stringify(message),  "*");
-            // "http://127.0.0.1:9000/chat.html")        
-        }
 
         function showUserProfile(id) {
             $.ajax({     
                 async: true,                                 
-                url: './profile/1',              
+                url: '/profile/'+id,
                 type: "get",          
                 dataType: 'html',                
                 success: function(data){
-                    $("#profile").html(data);
+                    document.querySelector("#profile_content").contentWindow.document.open();
+                    document.querySelector("#profile_content").contentWindow.document.write(data);
+                    document.querySelector("#profile_content").contentWindow.document.close();                   
                     $("#profile").show();
-                    $("#chat").hide();
                     $("#close-btn").show();
                     document.body.classList.toggle('activeForm');
                 } 
             });                 
+        }
+
+        function sendMessage(id) {
+          //$('#exampleModalCenter').modal('show')
+          $("#toId").val(id);
+          $('#changeCity').modal('toggle');
         }
 
       window.addEventListener('message', function (e) {
@@ -209,11 +206,10 @@ body.activeForm .overlay-form {
 
           var message = JSON.parse(e.data);
           if(message.id == "updateUserList"){
-              chatUserList = message.data;             
+              
           }
           else if(message.id == "message"){
               console.log("recv", message.data);
-              //$("#message3").show();
           }
 
       }, false);       

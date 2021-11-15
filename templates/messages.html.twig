@@ -1,0 +1,151 @@
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+<script type="text/javascript" src="/js/jquery.min.js"></script>
+<script type="text/javascript" src="/js/popper.min.js"></script>
+<script type="text/javascript" src="/js/bootstrap.min.js"></script>    
+<style>
+body{
+background-color: aliceblue;
+}
+
+.matches_container{
+width:100vh;
+height:100vh;
+margin: 0 auto;
+}
+
+.overlay-form {
+position:absolute;
+top:50vh;
+left:0px;
+width:100vw;
+height:0vh;
+background:rgba(54, 54, 54, 0.8);
+color:rgb(201, 193, 193);
+z-index:-1;
+opacity:0;
+padding:80px 100px;
+box-sizing:border-box;
+overflow-x: hidden;
+}
+
+.close-btn {
+position:absolute;
+top:10px;
+right:40px;
+color:white;
+font-size:40px;
+font-weight:600;
+cursor:pointer;
+z-index:3;
+}
+
+.overlay-form a:hover {
+color: var(--btn-color);
+}
+
+.overlay-form h1 {
+font-size:32px;
+color:#fff;
+}
+
+.overlay-form label {
+margin-bottom: 10px;
+display: block;
+}
+
+.overlay-form .btn {
+padding: 12px;
+margin: 10px 0;
+border: none;
+width: 100%;
+border-radius: 3px;
+cursor: pointer;
+font-size: 17px;
+z-index:3;
+}
+
+.close-btn:hover {
+color: white;  
+}
+
+.overlay-form hr {
+border: 1px solid lightgrey;
+}
+
+body.activeForm .overlay-form {
+z-index:1;
+opacity:1;
+top: 0px;
+left: 0px;
+width: 100%;
+height: 100%;
+}
+</style>  
+
+<div class="matches_container">
+  <div>
+    {% if items|length > 0 %}      
+      <h3>Your Messages</h3>
+    {% else %}
+      <h3>No Messages</h3>
+    {% endif %}          
+  </div>
+  <table class="table table-bordered">
+    <thead class="thead-default">
+    <tr>
+      <th style="width: 70px">Photo</th>
+      <th>Name</th>
+      <th>Message</th>
+      <th style="width: 90px">Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% if items|length > 0 %}
+      {% for item in items %}
+        <tr id="{{item.id}}">
+          <td><img style="border-radius: 50%;" src="{{item.photo}}" width="60px;" height="60px;"/></td>              
+          <td>{{ item.userName }}</td>
+          <td>{{ item.message }}</td>
+          <td>
+            <a style="cursor:pointer;color:white;" onclick="deleteMessage({{item.id}});" class="btn btn-primary">Delete</a>
+          </td>
+        </tr>
+      {% endfor %}
+    {% endif %}
+    </tbody>
+  </table>
+</div>
+
+<script>
+    function deleteMessage(id) {
+          $.ajax
+          ({
+            url: '/delmessage',
+            type: "post",          
+            dataType: "json",             
+            data: JSON.stringify({
+                msgId: id
+            }),                
+            'success': function(data){ 
+              console.log("msg", data);
+              if(data.flag == 1) {
+                 $('#' + data.msgId).remove();
+              }
+            }
+          });  
+    }
+
+  window.addEventListener('message', function (e) {
+      console.log(e.data)
+
+      var message = JSON.parse(e.data);
+      if(message.id == "updateUserList"){
+          
+      }
+      else if(message.id == "message"){
+          console.log("recv", message.data);
+      }
+
+  }, false);       
+</script>
+

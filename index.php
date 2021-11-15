@@ -21,8 +21,11 @@ $app->get('/', function ($request, $response, $args) {
 
     //debug_to_console($userName);
     //debug_to_console($userId);
+    $data = ['nameVal' => $userName, 'idVal' => $userId];
+    $data['photoVal'] = get_swipe_photo($userId);
 
-    return $this->view->render($response, 'home.html.twig', ['nameVal' => $userName, 'idVal' => $userId] );
+    return $this->view->render($response, 'home.html.twig', $data );
+
 });
 
 
