@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/animate.css" type="text/css" />
+</head>
+
+<body class="chat">
+	<audio id="message-received" autoplay></audio>
+	<div class="chat__sidebar" id="chat__sidebar">
+		<h3>Users</h3>
+		<div id="users"></div>
+	</div>
+	<div class="chat__main">
+		<div class="alert alert-success animated slideInDown text-center alert-display alert-hide" id="alert-box"> <span class="alert-text"></span></div>
+		<div id="myModal" class="modal fade" role="dialog">
+			<br><br>
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">Modal Header</h4>
+					</div>
+					<div class="modal-body" style="height: 400px;overflow-y: scroll">
+						<ol id="private_messages_list" class="chat__messages"></ol>
+					</div>
+					<div class="modal-footer">
+						<div class="chat__footer">
+							<form id="private-message-form">
+								<input name="private-message" type="text" placeholder="Message" autocomplete="off" required/>
+								<button class="private-message-send">Send</button>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<ol id="messages" class="chat__messages">
+		</ol>
+		<div class="chat__footer">
+			<form id="message-form">
+				<input name="message" type="text" placeholder="Message" autocomplete="off"/>
+				<button class="btn btn-success">Send</button>
+			</form>
+		</div>
+	</div>
+	<script id="private-message-template" type="text/template">
+		<li class="message">
+			<div class="message__title">
+				<h4>{{from}}</h4>
+				<span class="user-time">{{createdAt}}</span>
+			</div>
+			<div class="message__body">
+				<p>{{text}}</p>
+			</div>
+		</li>
+	</script>
+	<script id="message-template" type="text/template">
+		<li class="message">
+			<div class="message__title">
+				<h4>{{from}}</h4>
+				<span class="user-time">{{createdAt}}</span>
+			</div>
+			<div class="message__body">
+				<p>{{text}}</p>
+			</div>
+		</li>
+	</script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="/socket.io/socket.io.js"></script>
+	<script src="/js/libs/moment.js"></script>
+	<script src="/js/libs/mustache.js"></script>
+	<script src="/js/libs/deparam.js"></script>
+	<script src="/js/chat.js"></script>
+</body>
+
+</html>
