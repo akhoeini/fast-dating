@@ -33,7 +33,7 @@ headers: {
 "Content-Type": "application/json; charset=UTF-8"
 },
 error: function (error) {
-console.log(error);
+$("p.message").text("Profile updated");
 }
 }).done(function () {
 $("p.message").text("Profile updated");
@@ -118,9 +118,9 @@ $("p.message").text("Profile updated");
 				<div class="py-3 pb-4 border-bottom">
 					<button id="saveChanges" class="save-profile-btn btn btn-primary mr-3">Save Changes</button>
 					<button class="btn border button">Cancel</button>
+					<p class="message"></p>
 				</div>
 			</form>
-			<p class="message"></p>
 			<div class="d-sm-flex align-items-center pt-3" id="deactivate">
 				<div>
 					<b>Deactivate your account</b>
