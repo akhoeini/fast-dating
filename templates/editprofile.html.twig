@@ -2,30 +2,67 @@
 
 {% block addHead %}
 	<link rel="stylesheet" href="../styles/profile.css">
-{% endblock %}
-
-{% block content %}
-	<div class="wrapper">
-		<h4 class="pb-4 border-bottom">My Profile</h4>
-		<div class="d-flex align-items-start py-3 border-bottom">
-			{% for picture in pics %}
-				<div class="d-flex flex-column">
-					<img src="../{{ picture.url }}" class="img">
-					<span class="imgDelete">
-						<a href="">Delete</a>
-					</span>
-				</div>
-			{% endfor %}
-			<div class="pl-sm-4 pl-2" id="img-section">
-				<b>Photo</b>
-				<p>Accepted file type .jpeg .bitmap .png. Less than 2MB</p>
-				<button class="btn button border">
-					<b>Upload</b>
-				</button>
+	<script>
+		$(document).ready(function () { // click on button submit
+$("#saveChanges").click(function (e) {
+e.preventDefault();
+var genderLF = "3";
+if ($("#genderLFm").val() != 1) {
+genderLF = "2";
+}
+if ($("#genderLFf").val() != 1) {
+genderLF = "1";
+}
+var profile = JSON.stringify({
+firstName: $("#firstName").val(),
+location: $("#location").val(),
+username: $("#username").val(),
+email: $("#email").val(),
+gender: $("#gender").val(),
+genderLF,
+bio: $("#bio").val()
+});
+console.log(profile);
+// send ajax
+$.ajax({
+url: '/edit-profile',
+type: "PATCH",
+dataType: 'json',
+data: profile,
+headers: {
+"Content-Type": "application/json; charset=UTF-8"
+},
+error: function (jqxhr, status, errorThrown) {
+httpErrorHandler(jqxhr, status, errorThrown);
+}
+}).done(function () {
+$("p.message").text("Profile updated");
+});
+});
+});
+	</script>
+{% endblock %}{% endblock %}{% block content %}
+<div class="wrapper">
+	<h4 class="pb-4 border-bottom">My Profile</h4>
+	<div class="d-flex align-items-start py-3 border-bottom">
+		{% for picture in pics %}
+			<div class="d-flex flex-column">
+				<img src="../{{ picture.url }}" class="img">
+				<span class="imgDelete">
+					<a href="">Delete</a>
+				</span>
 			</div>
+		{% endfor %}
+		<div class="pl-sm-4 pl-2" id="img-section">
+			<b>Photo</b>
+			<p>Accepted file type .jpeg .bitmap .png. Less than 2MB</p>
+			<button class="btn button border">
+				<b>Upload</b>
+			</button>
 		</div>
-		<div class="py-2">
-		<form action="" method="post">
+	</div>
+	<div class="py-2">
+		<form id="edit-profile">
 			<div class="row py-2">
 				<div class="col-md-6">
 					<label for="firstName">First Name</label>
@@ -58,11 +95,11 @@
 					<fieldset>
 						<legend>I'm looking for:</label>
 						<div>
-							<input type="checkbox" id="men" name="genderLFm" value="1" {{ u.userLookingForId == 2 ? '' : 'checked' }}>
+							<input type="checkbox" id="genderLFm" name="genderLFm" value="1" {{ u.userLookingForId == 2 ? '' : 'checked' }}>
 							<label class="checkbox" for="men">Men</label>
 						</div>
 						<div>
-							<input type="checkbox" id="women" name="genderLFf" value="1" {{ u.userLookingForId == 1 ? '' : 'checked' }}>
+							<input type="checkbox" id="genderLFf" name="genderLFf" value="1" {{ u.userLookingForId == 1 ? '' : 'checked' }}>
 							<label class="checkbox" for="Women">Women</label>
 						</div>
 					</fieldset>
@@ -70,27 +107,26 @@
 			</div>
 			<div class="row py-2">
 				<div class="col-lg-12">
-				<label for="bio">Bio</label>
-				<textarea class="bg-light form-control" id="bio" name="bio" rows="5" style="width: 100%;">
-				{{ u.bio }}
-				</textarea>
+					<label for="bio">Bio</label>
+					<textarea class="bg-light form-control" id="bio" name="bio" rows="5" style="width: 100%;">
+						{{ u.bio }}
+					</textarea>
 				</div>
 			</div>
 			<div class="py-3 pb-4 border-bottom">
-				<input type="submit" name="save-changes" class="save-profile-btn btn btn-primary mr-3" value="Save Changes" />
+				<button id="saveChanges" class="save-profile-btn btn btn-primary mr-3">Save Changes</button>
 				<button class="btn border button">Cancel</button>
 			</div>
-			</form>
-			<div class="d-sm-flex align-items-center pt-3" id="deactivate">
-				<div>
-					<b>Deactivate your account</b>
-					<p>Details about your account and password</p>
-				</div>
-				<div class="ml-auto">
-					<button class="btn danger">Deactivate</button>
-				</div>
+		</form>
+		<p class="message"></p>
+		<div class="d-sm-flex align-items-center pt-3" id="deactivate">
+			<div>
+				<b>Deactivate your account</b>
+				<p>Details about your account and password</p>
+			</div>
+			<div class="ml-auto">
+				<button class="btn danger">Deactivate</button>
 			</div>
 		</div>
 	</div>
-
-{% endblock content %}
+</div>{% endblock content %}

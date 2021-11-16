@@ -43,13 +43,16 @@ $app->get('/edit-profile', function ($request, $response, $args) {
     }
 });
 
-$app->post('/edit-profile', function ($request, $response) use ($log) {
+$app->patch('/edit-profile', function ($request, $response) use ($log) {
     if ($_SESSION['user']['id']) {
         $userId = $_SESSION['user']['id'];
     } else {
         $response = $response->withStatus(302);
         return $response->withHeader('Location', '/login');
     };
+    $json = $request->getBody();
+    $profile = json_decode($json, TRUE);
+    /*
     $firstName = $request->getParam('firstName');
     $location = $request->getParam('location');
     $username = $request->getParam('username');
@@ -65,9 +68,10 @@ $app->post('/edit-profile', function ($request, $response) use ($log) {
         $genderLF = 1;
     }
     $bio = $request->getParam('bio');
+    */
 
     // success
-    $valuesList = ['firstName' => $firstName, 'location' => $location, 'username' => $username, 'email' => $email, 'gender' => $gender, 'userLookingForId' => $genderLF, 'bio' => $bio];
+    $valuesList = ['firstName' => $profile['firstName'], 'location' => $profile['location'], 'username' => $profile['username'], 'email' => $profile['email'], 'gender' => $profile['gender'], 'userLookingForId' => $profile['genderLF'], 'bio' => $profile['bio']];
     DB::update('users', $valuesList, "id=%i", $userId);
     $log->debug(sprintf("User with Id=%s updated", $userId));
     return $this->view->render($response, 'editprofile.html.twig');
