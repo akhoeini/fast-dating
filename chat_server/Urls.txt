@@ -1,0 +1,5 @@
+1. Dating Site
+2. Shenguang Gue, Kevin Paul, Mohammadamin khoeini
+3. http://dating.fsd01.ca(important we disabled https for our chat server)
+4.https://github.com/akhoeini/fast-dating.git
+5. https://trello.com/b/hBZ8oebp/project-main-board
