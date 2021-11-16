@@ -54,7 +54,7 @@ $app->patch('/edit-profile', function ($request, $response) use ($log) {
     $profile = json_decode($json, TRUE);
  
     // success
-    $valuesList = ['firstName' => $profile['firstName'], 'location' => $profile['location'], 'username' => $profile['username'], 'email' => $profile['email'], 'gender' => $profile['gender'], 'userLookingForId' => $profile['genderLF'], 'bio' => $profile['bio']];
+    $valuesList = ['firstName' => $profile['firstName'], 'location' => $profile['location'], 'username' => $profile['username'], 'email' => $profile['email'], 'genderId' => $profile['gender'], 'userLookingForId' => $profile['genderLF'], 'bio' => $profile['bio']];
     DB::update('users', $valuesList, "id=%i", $userId);
     $log->debug(sprintf("User with Id=%s updated", $userId));
     return $this->view->render($response, 'editprofile.html.twig');
