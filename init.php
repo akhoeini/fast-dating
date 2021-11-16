@@ -93,4 +93,5 @@ $container['view'] = function ($c) {
 };
 
 $container['upload_directory'] = __DIR__ . '/uploads/swipe_photos/';
+$container['upload_directory1'] = __DIR__ . '/uploads/profile_photos/';
 

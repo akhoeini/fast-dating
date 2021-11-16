@@ -284,6 +284,7 @@ footer {
             window.datingApp.showRecommendation = showRecommendation;
             window.datingApp.showAlertMessage = showAlertMessage;
             window.datingApp.updateFacePhoto = updateFacePhoto;
+            window.datingApp.updateProfilePage = updateProfilePage;
 
             fetchIframe('#content','/photo1','get');
 
@@ -344,6 +345,10 @@ footer {
         
         updateFacePhoto = function(img) {
             $("#userFace").css("background-image", "url("+img+")");
+        }
+
+        updateProfilePage = function() {
+            showProfile();
         }
 
         function showChatRoom(room) {

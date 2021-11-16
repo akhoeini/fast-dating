@@ -40,6 +40,32 @@ $("p.message").text("Profile updated");
 });
 });
 });
+
+      var input = document.getElementById( 'upload' );
+      function readURL(input) {
+          if (input.files && input.files[0]) {
+              var reader = new FileReader();
+
+              reader.onload = function (e) {
+                  var dataURL = reader.result;
+                  $.ajax({
+                      url: '/profile_photo',
+                      method: 'post',
+                      dataType: "json",
+                      data: JSON.stringify({
+                        data: dataURL
+                      }),
+                      success: function(data){
+                        console.log("upload photo ok", data);
+                     	var app = parent.datingApp;
+                        app.updateProfilePage(data.data); 						
+                      } 
+                  });
+				 console.log("upload photo!!");
+              };
+              reader.readAsDataURL(input.files[0]);
+          }
+      }
 	</script>
 {% endblock %}
 
@@ -50,17 +76,20 @@ $("p.message").text("Profile updated");
 			{% for picture in pics %}
 				<div class="d-flex flex-column">
 					<img src="../{{ picture.url }}" class="img">
+					<!--
 					<span class="imgDelete">
 						<a href="">Delete</a>
 					</span>
+					-->
 				</div>
 			{% endfor %}
 			<div class="pl-sm-4 pl-2" id="img-section">
 				<b>Photo</b>
-				<p>Accepted file type .jpeg .bitmap .png. Less than 2MB</p>
-				<button class="btn button border">
+				<p>Accepted file type .jpeg .png. Less than 2MB</p>
+				<input id="upload" type="file" onchange="readURL(this);" class="form-control border-0">
+				<!-- <button class="btn button border">
 					<b>Upload</b>
-				</button>
+				</button> -->
 			</div>
 		</div>
 		<div class="py-2">

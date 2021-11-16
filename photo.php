@@ -127,3 +127,54 @@ $app->post('/photo2', function ($request, $response, $args) {
     $response->getBody()->write(json_encode($res));
     return $response;    
 });
+
+$app->post('/profile_photo', function ($request, $response, $args) {
+    if(!check_user_session($response))
+        return $response;
+
+    $id = $_SESSION['user']['id'];        
+    $json = $request->getBody();
+
+    $item = json_decode($json, TRUE);
+
+    $img = $item['data'];
+    global $log;
+    $log->debug(json_encode($img));
+
+    $image_info = getimagesize($img);
+
+    $extension = (isset($image_info["mime"]) ? explode('/', $image_info["mime"] )[1]: "");
+
+    //$log->debug(json_encode($$extension));
+
+    if($extension == "png")
+        $img = str_replace('data:image/png;base64,', '', $img);    
+    else if($extension == "jpeg")
+        $img = str_replace('data:image/jpeg;base64,', '', $img);
+    else {
+        $res = ["code" => 1, "error" => $extension];    
+        $response->getBody()->write(json_encode($res));
+        return $response;
+    }        
+
+	$img = str_replace(' ', '+', $img);
+	$data = base64_decode($img);
+    $fname = $id . '_' . time();
+	$filename = $this->get('upload_directory1') . $fname . ".". $extension;
+	$success = file_put_contents($filename, $data);
+   
+    $insertId = 0;
+    $album = DB::queryFirstRow("SELECT * FROM albums WHERE ownerId=%d", $id);
+    if(!$album) {
+        DB::insert('albums', ['ownerId' => $id]);      
+        $insertId = DB::insertId();
+    } else {
+        $insertId = $album['id'];
+    }    
+    
+    DB::insert('photo', ['name' => 'test', 'albumId' => $insertId, 'url' => '/uploads/profile_photos/' . $fname . "." . $extension ]);                  
+
+    $res = ["code" => 0, "error" => ""];    
+    $response->getBody()->write(json_encode($res));
+    return $response;
+});
