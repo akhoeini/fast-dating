@@ -127,7 +127,7 @@ select:focus {
     object-fit: cover;
 }
 
-#firstName {
+span#firstName {
     color: rgb(190, 13, 119);
 }
 
