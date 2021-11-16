@@ -7,10 +7,10 @@
 $("#saveChanges").click(function (e) {
 e.preventDefault();
 var genderLF = "3";
-if ($("#genderLFm").val() != 1) {
+if ($("#genderLFm").not(":checked")) {
 genderLF = "2";
 }
-if ($("#genderLFf").val() != 1) {
+if ($("#genderLFf").not(":checked")) {
 genderLF = "1";
 }
 var profile = JSON.stringify({
@@ -32,8 +32,8 @@ data: profile,
 headers: {
 "Content-Type": "application/json; charset=UTF-8"
 },
-error: function (jqxhr, status, errorThrown) {
-httpErrorHandler(jqxhr, status, errorThrown);
+error: function (error) {
+console.log(error);
 }
 }).done(function () {
 $("p.message").text("Profile updated");
@@ -41,92 +41,95 @@ $("p.message").text("Profile updated");
 });
 });
 	</script>
-{% endblock %}{% endblock %}{% block content %}
-<div class="wrapper">
-	<h4 class="pb-4 border-bottom">My Profile</h4>
-	<div class="d-flex align-items-start py-3 border-bottom">
-		{% for picture in pics %}
-			<div class="d-flex flex-column">
-				<img src="../{{ picture.url }}" class="img">
-				<span class="imgDelete">
-					<a href="">Delete</a>
-				</span>
-			</div>
-		{% endfor %}
-		<div class="pl-sm-4 pl-2" id="img-section">
-			<b>Photo</b>
-			<p>Accepted file type .jpeg .bitmap .png. Less than 2MB</p>
-			<button class="btn button border">
-				<b>Upload</b>
-			</button>
-		</div>
-	</div>
-	<div class="py-2">
-		<form id="edit-profile">
-			<div class="row py-2">
-				<div class="col-md-6">
-					<label for="firstName">First Name</label>
-					<input type="text" name="firstName" id="firstName" class="bg-light form-control" value="{{u.firstName}}">
+{% endblock %}
+
+{% block content %}
+	<div class="wrapper">
+		<h4 class="pb-4 border-bottom">My Profile</h4>
+		<div class="d-flex align-items-start py-3 border-bottom">
+			{% for picture in pics %}
+				<div class="d-flex flex-column">
+					<img src="../{{ picture.url }}" class="img">
+					<span class="imgDelete">
+						<a href="">Delete</a>
+					</span>
 				</div>
-				<div class="col-md-6 pt-md-0 pt-3">
-					<label for="location">Location</label>
-					<input type="text" name="location" id="location" class="bg-light form-control" value="{{u.location}}">
-				</div>
-			</div>
-			<div class="row py-2">
-				<div class="col-md-6">
-					<label for="email">Username</label>
-					<input type="text" name="username" id="username" class="bg-light form-control" value="{{u.userName}}">
-				</div>
-				<div class="col-md-6 pt-md-0 pt-3">
-					<label for="phone">Email</label>
-					<input type="tel" name="email" id="email" class="bg-light form-control" value="{{u.email}}">
-				</div>
-			</div>
-			<div class="row py-2">
-				<div class="col-md-6">
-					<label for="gender">Gender</label>
-					<select name="gender" id="gender" class="bg-light">
-						<option value="1" {{u.genderId == 1 ? 'selected="selected"'}}>Male</option>
-						<option value="2" {{u.genderId == 2 ? 'selected="selected"'}}>Female</option>
-					</select>
-				</div>
-				<div class="col-md-6 pt-md-0 pt-3" id="genderLF">
-					<fieldset>
-						<legend>I'm looking for:</label>
-						<div>
-							<input type="checkbox" id="genderLFm" name="genderLFm" value="1" {{ u.userLookingForId == 2 ? '' : 'checked' }}>
-							<label class="checkbox" for="men">Men</label>
-						</div>
-						<div>
-							<input type="checkbox" id="genderLFf" name="genderLFf" value="1" {{ u.userLookingForId == 1 ? '' : 'checked' }}>
-							<label class="checkbox" for="Women">Women</label>
-						</div>
-					</fieldset>
-				</div>
-			</div>
-			<div class="row py-2">
-				<div class="col-lg-12">
-					<label for="bio">Bio</label>
-					<textarea class="bg-light form-control" id="bio" name="bio" rows="5" style="width: 100%;">
-						{{ u.bio }}
-					</textarea>
-				</div>
-			</div>
-			<div class="py-3 pb-4 border-bottom">
-				<button id="saveChanges" class="save-profile-btn btn btn-primary mr-3">Save Changes</button>
-				<button class="btn border button">Cancel</button>
-			</div>
-		</form>
-		<p class="message"></p>
-		<div class="d-sm-flex align-items-center pt-3" id="deactivate">
-			<div>
-				<b>Deactivate your account</b>
-				<p>Details about your account and password</p>
-			</div>
-			<div class="ml-auto">
-				<button class="btn danger">Deactivate</button>
+			{% endfor %}
+			<div class="pl-sm-4 pl-2" id="img-section">
+				<b>Photo</b>
+				<p>Accepted file type .jpeg .bitmap .png. Less than 2MB</p>
+				<button class="btn button border">
+					<b>Upload</b>
+				</button>
 			</div>
 		</div>
+		<div class="py-2">
+			<form id="edit-profile">
+				<div class="row py-2">
+					<div class="col-md-6">
+						<label for="firstName">First Name</label>
+						<input type="text" name="firstName" id="firstName" class="bg-light form-control" value="{{u.firstName}}">
+					</div>
+					<div class="col-md-6 pt-md-0 pt-3">
+						<label for="location">Location</label>
+						<input type="text" name="location" id="location" class="bg-light form-control" value="{{u.location}}">
+					</div>
+				</div>
+				<div class="row py-2">
+					<div class="col-md-6">
+						<label for="email">Username</label>
+						<input type="text" name="username" id="username" class="bg-light form-control" value="{{u.userName}}">
+					</div>
+					<div class="col-md-6 pt-md-0 pt-3">
+						<label for="phone">Email</label>
+						<input type="tel" name="email" id="email" class="bg-light form-control" value="{{u.email}}">
+					</div>
+				</div>
+				<div class="row py-2">
+					<div class="col-md-6">
+						<label for="gender">Gender</label>
+						<select name="gender" id="gender" class="bg-light">
+							<option value="1" {{u.genderId == 1 ? 'selected="selected"'}}>Male</option>
+							<option value="2" {{u.genderId == 2 ? 'selected="selected"'}}>Female</option>
+						</select>
+					</div>
+					<div class="col-md-6 pt-md-0 pt-3" id="genderLF">
+						<fieldset>
+							<legend>I'm looking for:</label>
+							<div>
+								<input type="checkbox" id="genderLFm" name="genderLFm" value="1" {{ u.userLookingForId == 2 ? '' : 'checked' }}>
+								<label class="checkbox" for="men">Men</label>
+							</div>
+							<div>
+								<input type="checkbox" id="genderLFf" name="genderLFf" value="1" {{ u.userLookingForId == 1 ? '' : 'checked' }}>
+								<label class="checkbox" for="Women">Women</label>
+							</div>
+						</fieldset>
+					</div>
+				</div>
+				<div class="row py-2">
+					<div class="col-lg-12">
+						<label for="bio">Bio</label>
+						<textarea class="bg-light form-control" id="bio" name="bio" rows="5" style="width: 100%;">
+							{{ u.bio }}
+						</textarea>
+					</div>
+				</div>
+				<div class="py-3 pb-4 border-bottom">
+					<button id="saveChanges" class="save-profile-btn btn btn-primary mr-3">Save Changes</button>
+					<button class="btn border button">Cancel</button>
+				</div>
+			</form>
+			<p class="message"></p>
+			<div class="d-sm-flex align-items-center pt-3" id="deactivate">
+				<div>
+					<b>Deactivate your account</b>
+					<p>Details about your account and password</p>
+				</div>
+				<div class="ml-auto">
+					<button class="btn danger">Deactivate</button>
+				</div>
+			</div>
+		</div>
 	</div>
-</div>{% endblock content %}
+{% endblock content %}
