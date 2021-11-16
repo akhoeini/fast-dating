@@ -24,6 +24,16 @@ $app->get('/', function ($request, $response, $args) {
     $data = ['nameVal' => $userName, 'idVal' => $userId];
     $data['photoVal'] = get_swipe_photo($userId);
 
+    //get the chat room name
+    $data['chatRoomList'] = [];
+
+    $chatroomList = DB::query("SELECT * FROM room");
+    if(!$chatroomList) {        
+        return $this->view->render($response, 'home.html.twig', $data);
+    }    
+
+    $data['chatRoomList'] = $chatroomList;
+
     return $this->view->render($response, 'home.html.twig', $data );
 
 });

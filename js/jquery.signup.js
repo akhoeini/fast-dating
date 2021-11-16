@@ -1,6 +1,6 @@
 $(document).ready(function() {
     if (validateToken()) {
-        window.location.href = './index.php'
+        window.location.href = './main'
         return;
     }
 
@@ -116,7 +116,7 @@ function signup(username, email, password) {
         password: password
     });
     $.ajax({
-        url: '/signup',
+        url: '/admin/signup',
         type: 'POST',
         data: newUser,
         dataType: 'json',
@@ -130,7 +130,7 @@ function signup(username, email, password) {
         var result = JSON.parse(JSON.stringify(responseJSON));
         window.localStorage.setItem("fastdating-token", result.token);
         alert("Record created successfuly");
-        window.location.href = './index.php'
+        window.location.href = './main'
     }).always(function() {
 
     });

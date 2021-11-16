@@ -1,6 +1,6 @@
 $(document).ready(function() {
     if (validateToken()) {
-        window.location.href = './index.php'
+        window.location.href = './main'
         return;
     }
 
@@ -13,7 +13,6 @@ $(document).ready(function() {
     $("#signup-link").click(function() {
         window.location.href = './signup'
     });
-
 
 });
 
@@ -73,7 +72,7 @@ function login(email, password) {
         password: password
     });
     $.ajax({
-        url: '/login',
+        url: '/admin/login',
         type: 'POST',
         data: newUser,
         dataType: 'json',
@@ -84,7 +83,7 @@ function login(email, password) {
     }).done(function(responseJSON) {
         var result = JSON.parse(JSON.stringify(responseJSON));
         window.localStorage.setItem("fastdating-token", result.token);
-        window.location.href = './index.php'
+        window.location.href = './main'
     }).always(function() {
 
     });
