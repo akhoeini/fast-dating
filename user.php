@@ -43,7 +43,7 @@ $app->get('/edit-profile', function ($request, $response, $args) {
     }
 });
 
-$app->post('/edit-profile', function ($request, $response) {
+$app->post('/edit-profile', function ($request, $response) use ($log) {
     if ($_SESSION['user']['id']) {
         $userId = $_SESSION['user']['id'];
     } else {
@@ -66,5 +66,10 @@ $app->post('/edit-profile', function ($request, $response) {
     }
     $bio = $request->getParam('bio');
 
-    
+    // success
+    $valuesList = ['firstName' => $firstName, 'location' => $location, 'username' => $username, 'email' => $email, 'gender' => $gender, 'userLookingForId' => $genderLF, 'bio' => $bio];
+    DB::update('users', $valuesList, "id=%i", $userId);
+    $log->debug(sprintf("User with Id=%s updated", $userId));
+    return $this->view->render($response, 'editprofile.html.twig');
+
 });
