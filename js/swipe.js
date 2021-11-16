@@ -1,14 +1,14 @@
 ;(function ($, window, document, undefined) {
-	var pluginName = "jTinder",
-		defaults = {
-			onDislike: null,
-			onLike: null,
-			animationRevertSpeed: 200,
-			animationSpeed: 400,
-			threshold: 1,
-			likeSelector: '.like',
-			dislikeSelector: '.dislike'
-		};
+	var pluginName = "Swipe",
+	defaults = {
+		onDislike: null,
+		onLike: null,
+		animationRevertSpeed: 200,
+		animationSpeed: 400,
+		threshold: 1,
+		likeSelector: '.like',
+		dislikeSelector: '.dislike'
+	};
 
 	var container = null;
 	var panes = null;
@@ -18,7 +18,7 @@
 	var touchStart = false;
 	var posX = 0, posY = 0, lastPosX = 0, lastPosY = 0, pane_width = 0, pane_count = 0, current_pane = 0;
 
-	function Plugin(element, options) {
+	function Swipe(element, options) {
 		this.element = element;
 		this.settings = $.extend({}, defaults, options);
 		this._defaults = defaults;
@@ -26,9 +26,7 @@
 		this.init(element);
 	}
 
-	Plugin.prototype = {
-
-
+	Swipe.prototype = {
 		init: function (element) {
 
 			container = $(">ul", element);
@@ -156,9 +154,9 @@
 	$.fn[ pluginName ] = function (options) {
 		this.each(function () {
 			if (!$.data(this, "plugin_" + pluginName)) {
-				$.data(this, "plugin_" + pluginName, new Plugin(this, options));
+				$.data(this, "plugin_" + pluginName, new Swipe(this, options));
 			}
-			else if ($.isFunction(Plugin.prototype[options])) {
+			else if ($.isFunction(Swipe.prototype[options])) {
 				$.data(this, 'plugin_' + pluginName)[options]();
 		    }
 		});

@@ -31,7 +31,7 @@
 
 
 <script>
-    $("#tinderslide").jTinder({
+    $("#tinderslide").Swipe({
         onDislike: function (item) {
             //send message to server            
             //console.log("onDislike", "#pane"+item.index(), document.getElementById("pane"+item.index()).getAttribute("data-value"));
@@ -89,7 +89,7 @@
 
     $('.actions .like, .actions .dislike').click(function(e){
 	    e.preventDefault();
-	    $("#tinderslide").jTinder($(this).attr('class'));
+	    $("#tinderslide").Swipe($(this).attr('class'));
     });
 </script>
 
