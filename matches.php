@@ -113,7 +113,7 @@ $app->get('/matches', function ($request, $response, $args) {
                            ? "/images/face.jpg" 
                            : $photo;
         $userItem->userName = $user['userName'];
-        $userItem->location = 'Montreal';
+        $userItem->location = ($user['location'] != null) ? $user['location'] : "Unknown";
         $data["items"][] = $userItem;
     }
 
@@ -372,7 +372,7 @@ $app->get('/likes', function ($request, $response, $args) {
         if($matchUserList)
             continue;
 
-        $user = DB::queryFirstRow("SELECT userName FROM users WHERE id=%d", $m_id);
+        $user = DB::queryFirstRow("SELECT userName, location FROM users WHERE id=%d", $m_id);
 
         $userItem = new LikedUser();
         $userItem->id = $m_id;
@@ -382,7 +382,7 @@ $app->get('/likes', function ($request, $response, $args) {
                            ? "/images/face.jpg" 
                            : $photo;
         $userItem->userName = $user['userName'];
-        $userItem->location = 'Montreal';
+        $userItem->location = ($user['location'] != null) ? $user['location'] : "Unknown";
         $data["items"][] = $userItem;
     }
 
@@ -408,7 +408,7 @@ $app->get('/likes1', function ($request, $response, $args) {
         if($matchUserList)
             continue;
 
-        $user = DB::queryFirstRow("SELECT userName FROM users WHERE id=%d", $m_id);
+        $user = DB::queryFirstRow("SELECT userName, location FROM users WHERE id=%d", $m_id);
 
         $userItem = new LikedUser();
         $userItem->id = $m_id;
@@ -418,7 +418,7 @@ $app->get('/likes1', function ($request, $response, $args) {
                            ? "/images/face.jpg" 
                            : $photo;
         $userItem->userName = $user['userName'];
-        $userItem->location = 'Montreal';
+        $userItem->location = ($user['location'] != null) ? $user['location'] : "Unknown";
         $data["items"][] = $userItem;
     }
 
