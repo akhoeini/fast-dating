@@ -172,7 +172,7 @@ footer {
                     {% else %}
                         <div id="userFace" class="img" style="background-image: url({{photoVal}});"></div>
                     {% endif %}                                        
-	  				<h3>{{nameVal}}</h3>
+	  				<h3 id="userNameVal">{{nameVal}}</h3>
 	  			</div>
 	  		</div>
             <ul class="list-unstyled components mb-5">
@@ -347,8 +347,9 @@ footer {
             $("#userFace").css("background-image", "url("+img+")");
         }
 
-        updateProfilePage = function() {
+        updateProfilePage = function(name) {
             showProfile();
+            $("#userNameVal").text(name);
         }
 
         function showChatRoom(room) {

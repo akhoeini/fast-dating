@@ -33,10 +33,14 @@ headers: {
 "Content-Type": "application/json; charset=UTF-8"
 },
 error: function (error) {
-$("p.message").text("Profile updated");
+$("p.message").text("Profile updated error");
 }
 }).done(function () {
 $("p.message").text("Profile updated");
+		if(parent && parent.datingApp) {
+			var app = parent.datingApp;
+			app.updateProfilePage($("#username").val()); 						
+		}
 });
 });
 });
@@ -57,8 +61,10 @@ $("p.message").text("Profile updated");
                       }),
                       success: function(data){
                         console.log("upload photo ok", data);
-                     	var app = parent.datingApp;
-                        app.updateProfilePage(data.data); 						
+						if(parent && parent.datingApp) {
+							var app = parent.datingApp;
+							app.updateProfilePage(""); 						
+						}
                       } 
                   });
 				 console.log("upload photo!!");
@@ -66,6 +72,29 @@ $("p.message").text("Profile updated");
               reader.readAsDataURL(input.files[0]);
           }
       }
+
+	  function deletePhoto(url){
+
+			$.ajax({
+				url: '/profile_photo',
+				method: 'delete',
+				dataType: "json",
+				data: JSON.stringify({
+					url: url
+				}),
+				success: function(data){
+					console.log("delete photo ok", data);
+					if(parent && parent.datingApp) {
+						var app = parent.datingApp;
+						app.updateProfilePage(""); 						
+					}
+				},
+				error:  function(data){
+					console.log("delete photo ok", data);
+					}
+				});
+			console.log("delete photo!!");
+	}
 	</script>
 {% endblock %}
 
@@ -76,11 +105,9 @@ $("p.message").text("Profile updated");
 			{% for picture in pics %}
 				<div class="d-flex flex-column">
 					<img src="../{{ picture.url }}" class="img">
-					<!--
 					<span class="imgDelete">
-						<a href="">Delete</a>
+						<a onclick="deletePhoto('{{ picture.url }}')", href="#">Delete</a>
 					</span>
-					-->
 				</div>
 			{% endfor %}
 			<div class="pl-sm-4 pl-2" id="img-section">

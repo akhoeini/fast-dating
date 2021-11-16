@@ -178,3 +178,21 @@ $app->post('/profile_photo', function ($request, $response, $args) {
     $response->getBody()->write(json_encode($res));
     return $response;
 });
+
+$app->delete('/profile_photo', function ($request, $response, $args) {
+    if(!check_user_session($response))
+        return $response;
+
+    $id = $_SESSION['user']['id'];        
+    $json = $request->getBody();
+
+    $item = json_decode($json, TRUE);
+
+    $img = $item['url'];
+    
+    DB::delete('photo', 'url=%s', $img);                  
+
+    $res = ["code" => 0, "error" => ""];
+    $response->getBody()->write(json_encode($res));
+    return $response;
+});
