@@ -148,12 +148,20 @@ Kevin:
    2: Profile view implementation
    3: no
 
+Amin:
+   1: implementation of signup and login using JWT
+   2: add google and facebooke apies
+   3: no   
+
 Day 9 (11/4/2021):
 Shengguang:
    1: profile and matches pages intergration into main page
    2: fix matches page
    3: need to fix the problem of multiple css style in sub pages
-
+Amin:
+   1: implementation of admin panel
+   2: add pagination for users
+   3: no   
 
 Day 10 (11/10/2021):
 Kevin:
@@ -166,11 +174,21 @@ Shengguang:
    2: work on chat feature
    3: no
 
+Amin:
+   1: exam
+   2: add pagination for users
+   3: no   
+
 Day 11 (11/11/2021):
 Shengguang:
    1: worked on matches logic
    2: still work on chat features
    3: no
+
+Amin:
+   1: worked on Pagination for users and admin panel
+   2: change sign up and log in just for admin panle
+   3: no   
 
 Day 12 (11/12/2021):
 Shengguang:
@@ -179,12 +197,23 @@ Shengguang:
       chat client UI
    3: no
 
+Amin:
+   1: change sign up and log in just for admin panle finalize pagination and orderby feature
+   2: add charts and change theme for admin panel
+   3: no      
+
 Day 13 (11/13/2021):
 Shengguang:
    1: client chat UI & logic
    2: modify the home/main page
       work on likes UI & logic, 
    3: no
+
+Amin:
+   1: finalizing the admin panel
+   2: bug fix
+   3: no   
+
 
 Day 13 (11/13/2021):
 Shengguang:
@@ -201,3 +230,9 @@ Shengguang:
 	  work on message delete
 	  work on signout popup
    3: no
+
+Amin:
+   1: admin panel bug fix
+   2: finalize  admin panel
+      create a chart based on users gender creating powerpoint for my parts
+   3: no    
